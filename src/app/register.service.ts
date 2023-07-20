@@ -51,12 +51,15 @@ export class RegisterService {
     return this.currentPatientBehaviorSubject.asObservable();
   }
 
-  registerDoctor(docDetails: any) {
-    return this.hC.post('http://localhost:3000/doctor', docDetails);
+  registerDoctor(newDoctor: any) {
+    return this.hC.post('http://localhost:3000/doctors-api/doctors', newDoctor);
   }
 
-  registerPatient(patDetails: any) {
-    return this.hC.post('http://localhost:3000/patient', patDetails);
+  registerPatient(newPatient: any) {
+    return this.hC.post(
+      'http://localhost:3000/patients-api/patients',
+      newPatient
+    );
   }
 
   getuserCredPat(emailid) {
