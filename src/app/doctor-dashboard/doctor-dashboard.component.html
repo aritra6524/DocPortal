@@ -1,0 +1,15 @@
+<h2>Welcome, {{ doctor.name }}!</h2>
+
+<h3>Upcoming Appointments</h3>
+<ul>
+  <li *ngFor="let appointment of doctor.appointments">
+    {{ appointment.date | date }}
+  </li>
+</ul>
+
+<h3>Clinic Information</h3>
+<p>{{ doctor.clinicName }}</p>
+<!-- Other clinic details -->
+
+<!-- Add/update clinic information form -->
+<!-- Implement necessary functionalities -->
