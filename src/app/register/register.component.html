@@ -1,1 +1,362 @@
-<p>register works!</p>
+<html class="vh-100" style="margin-top: 58px">
+  <div class="card mx-auto p-3 col-10 col-md-8 col-lg-10">
+    <h1 class="mb-4">
+      Register<svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="40"
+        height="40"
+        fill="currentColor"
+        class="bi bi-building-fill-add ms-2"
+        viewBox="0 0 21 21"
+      >
+        <path
+          d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm.5-5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0Z"
+        />
+        <path
+          d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v7.256A4.493 4.493 0 0 0 12.5 8a4.493 4.493 0 0 0-3.59 1.787A.498.498 0 0 0 9 9.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .39-.187A4.476 4.476 0 0 0 8.027 12H6.5a.5.5 0 0 0-.5.5V16H3a1 1 0 0 1-1-1V1Zm2 1.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5Zm3 0v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5Zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1ZM4 5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5ZM7.5 5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Zm2.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5ZM4.5 8a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1Z"
+        />
+      </svg>
+    </h1>
+
+    <div class="d-flex mb-4">
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="radio-btn-doctor"
+          name="docprofile"
+          (change)="setProfile('Doctor')"
+        />
+        <label class="form-check-label" for="radio-btn-doctor"> Doctor </label>
+      </div>
+      <div class="form-check ms-4">
+        <input
+          class="form-check-input"
+          type="radio"
+          id="radio-btn-patient"
+          name="docprofile"
+          [checked]="true"
+          (change)="setProfile('Patient')"
+        />
+        <label class="form-check-label" for="radio-btn-patient">
+          Patient
+        </label>
+      </div>
+    </div>
+
+    <form
+      *ngIf="profileType == 'Patient'"
+      [formGroup]="registerPatForm"
+      (ngSubmit)="onPatFormSubmit()"
+    >
+      <div>
+        <!--Name input-->
+        <div class="mb-4 d-flex">
+          <div class="form-outline w-50 me-3">
+            <input
+              type="text"
+              id="first-name"
+              class="form-control"
+              formControlName="patfirstname"
+            />
+            <label class="form-label" for="first-name">First Name</label>
+          </div>
+          <div class="form-outline w-50">
+            <input
+              type="text"
+              id="last-name"
+              class="form-control"
+              formControlName="patlastname"
+            />
+            <label class="form-label" for="last-name">Last Name</label>
+          </div>
+        </div>
+
+        <!-- Phone Number input -->
+        <div class="form-outline mb-4">
+          <input
+            type="number"
+            id="phone-number"
+            class="form-control"
+            formControlName="patphone"
+          />
+          <label class="form-label" for="phone-number">Phone Number</label>
+        </div>
+
+        <!-- Email input -->
+        <div class="form-outline mb-4">
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            formControlName="patemail"
+          />
+          <label class="form-label" for="email">Email address</label>
+        </div>
+
+        <!-- Password input -->
+        <div class="form-outline mb-4">
+          <input
+            type="password"
+            id="pass"
+            class="form-control"
+            formControlName="patpassword"
+          />
+          <label class="form-label" for="pass">New Password</label>
+        </div>
+        <!-- <div class="form-outline mb-4">
+          <input type="password" id="password" class="form-control" />
+          <label class="form-label text-muted" for="password">Re-enter Password</label>
+        </div> -->
+
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4">
+          Sign in
+        </button>
+      </div>
+    </form>
+
+    <form
+      *ngIf="profileType == 'Doctor'"
+      [formGroup]="registerDocForm"
+      (ngSubmit)="onDocFormSubmit()"
+      style="overflow: scroll; height: 500px"
+    >
+      <div style="width: 98%">
+        <div>
+          <span>Dr.</span>
+          <!--Name input-->
+          <div class="mb-3 d-flex">
+            <div class="form-outline w-50 me-3">
+              <input
+                type="text"
+                id="first-name"
+                class="form-control"
+                formControlName="docfirstname"
+              />
+              <label class="form-label" for="first-name">First Name</label>
+            </div>
+            <div class="form-outline w-50">
+              <input
+                type="text"
+                id="last-name"
+                class="form-control"
+                formControlName="doclastname"
+              />
+              <label class="form-label" for="last-name">Last Name</label>
+            </div>
+          </div>
+
+          <!--Registration Number input-->
+          <div class="form-outline mb-3">
+            <input
+              type="number"
+              id="regd-number"
+              class="form-control"
+              formControlName="docregd"
+            />
+            <label class="form-label" for="regd-number"
+              >Doctor's Registration Number</label
+            >
+          </div>
+
+          <!--Specialization input-->
+          <div class="form-outline mb-3">
+            <select
+              name="specialization"
+              id="specialization"
+              class="form-control"
+              formControlName="docspecialization"
+            >
+              <option value="General Medicine">General Medicine</option>
+              <option value="General Surgery">General Surgery</option>
+              <option value="Cardiology">Cardiology</option>
+              <option value="Diabetology">Diabetology</option>
+              <option value="Orthopedic">Orthopedic</option>
+              <option value="Dermatology">Dermatology</option>
+              <option value="Neurology">Neurology</option>
+            </select>
+            <label class="form-label" for="specialization"
+              >Specialization</label
+            >
+          </div>
+
+          <!--Doctor Qualification input-->
+          <div class="form-outline mb-3">
+            <input
+              type="text"
+              id="qualification"
+              class="form-control"
+              formControlName="docqualification"
+            />
+            <label class="form-label" for="qualification">Qualification</label>
+          </div>
+
+          <!-- Doctor's Phone Number input -->
+          <div class="form-outline mb-3">
+            <input
+              type="number"
+              id="phone-number"
+              class="form-control"
+              formControlName="docphone"
+            />
+            <label class="form-label" for="phone-number">Phone Number</label>
+          </div>
+
+          <!-- Email input -->
+          <div class="form-outline mb-3">
+            <input
+              type="email"
+              id="email"
+              class="form-control"
+              formControlName="docemail"
+            />
+            <label class="form-label" for="email">Email address</label>
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-3">
+            <input
+              type="password"
+              id="password"
+              class="form-control"
+              formControlName="docpassword"
+            />
+            <label class="form-label" for="password">New Password</label>
+          </div>
+          <!-- <div class="form-outline mb-3">
+          <input type="password" id="password" class="form-control" />
+          <label class="form-label text-muted" for="password"
+            >Re-enter Password</label
+          >
+        </div> -->
+
+          <!--Clinic Details-->
+          <div class="form-outline mb-3">
+            <input
+              type="text"
+              id="clinic-name"
+              class="form-control"
+              formControlName="clinicname"
+            />
+            <label class="form-label" for="clinic-name">Clinic Name</label>
+          </div>
+          <div class="form-outline mb-3">
+            <input
+              type="text"
+              id="clinic-city"
+              class="form-control"
+              formControlName="cliniccity"
+            />
+            <label class="form-label" for="clinic-city">Clinic City</label>
+          </div>
+          <div class="form-outline mb-3">
+            <input
+              type="text"
+              id="clinic-address"
+              class="form-control"
+              formControlName="clinicaddress"
+            />
+            <label class="form-label" for="clinic-address"
+              >Clinic Address</label
+            >
+          </div>
+
+          <!--Business Hours-->
+          <div class="form-outline mb-3">
+            <input
+              type="time"
+              id="doc-time"
+              class="form-control"
+              formControlName="doctime"
+            />
+            <label class="form-label" for="doc-time">Business Time</label>
+          </div>
+
+          <!--Checkboxes-->
+          <div class="form-group checkbox mb-4" id="business-days">
+            <div class="ms-3 form-group">
+              <div class="row">
+                <div class="col-sm-3 form-check">
+                  <input
+                    type="checkbox"
+                    id="mon-chk"
+                    class="form-check-input"
+                    formControlName="mon"
+                  />
+                  <label for="mon-chk" class="form-check-label">Monday</label>
+                </div>
+                <div class="col-sm-3 form-check">
+                  <input
+                    type="checkbox"
+                    id="tues-chk"
+                    class="form-check-input"
+                    formControlName="tues"
+                  />
+                  <label for="tues-chk" class="form-check-label">Tuesday</label>
+                </div>
+                <div class="col-sm-3 form-check">
+                  <input
+                    type="checkbox"
+                    id="wed-chk"
+                    class="form-check-input"
+                    formControlName="wed"
+                  />
+                  <label for="wed-chk" class="form-check-label"
+                    >Wednesday</label
+                  >
+                </div>
+                <div class="col-sm-3 form-check">
+                  <input
+                    type="checkbox"
+                    id="thurs-chk"
+                    class="form-check-input"
+                    formControlName="thurs"
+                  />
+                  <label for="thurs-chk" class="form-check-label"
+                    >Thursday</label
+                  >
+                </div>
+                <div class="col-sm-3 form-check">
+                  <input
+                    type="checkbox"
+                    id="fri-chk"
+                    class="form-check-input"
+                    formControlName="fri"
+                  />
+                  <label for="fri-chk" class="form-check-label">Friday</label>
+                </div>
+                <div class="col-sm-3 form-check">
+                  <input
+                    type="checkbox"
+                    id="sat-chk"
+                    class="form-check-input"
+                    formControlName="sat"
+                  />
+                  <label for="sat-chk" class="form-check-label">Saturday</label>
+                </div>
+                <div class="col-sm-3 form-check">
+                  <input
+                    type="checkbox"
+                    id="sun-chk"
+                    class="form-check-input"
+                    formControlName="sun"
+                  />
+                  <label for="sun-chk" class="form-check-label">Sunday</label>
+                </div>
+              </div>
+            </div>
+            <label for="business-days" class="business-days"
+              >Select Business Days</label
+            >
+          </div>
+
+          <!-- Submit button -->
+          <button type="submit" class="btn btn-primary btn-block mb-4">
+            Sign-in
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</html>

@@ -1,0 +1,12 @@
+html{
+    background: url('/assets/8507-removebg-preview.png') no-repeat center;
+    background-size: contain;
+}
+
+.card{
+    background-color: rgba(246, 251, 255, 0.932);
+}
+
+.bi-building-fill-add{
+    color: rgba(1, 133, 1, 0.651);
+}

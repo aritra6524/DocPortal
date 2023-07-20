@@ -1,0 +1,101 @@
+<html class="container">
+  <div class="appointment-list" *ngIf="apptfilters.length != 0">
+    <i
+      ><h4 style="color: rgba(1, 133, 1, 0.705); font-weight: strong">
+        Appointments
+      </h4></i
+    >
+    <div class="row">
+      <div class="col-sm-6 my-3" *ngFor="let apptfilter of apptfilters">
+        <div
+          class="card"
+          style="
+            background-color: rgba(183, 228, 255, 0.295);
+            border-color: rgba(255, 0, 0, 0.459);
+          "
+        >
+          <div class="card-body d-flex">
+            <div class="doctor-details m-auto">
+              <h5 class="card-title">
+                {{ apptfilter.queue }}
+              </h5>
+              <h5 class="card-title">
+                Dr. {{ apptfilter.docfirstname }} {{ apptfilter.doclastname }}
+              </h5>
+              <p class="card-text">
+                {{ apptfilter.docspecialization }}<br />
+                {{ apptfilter.docqualification }}
+              </p>
+            </div>
+            <div class="clinic-details m-auto">
+              <p class="card-text">
+                {{ apptfilter.clinicname }}<br />
+                {{ apptfilter.clinicaddress }}<br />
+                {{ apptfilter.cliniccity }}
+              </p>
+            </div>
+            <div class="appointment-details m-auto">
+              <h5 class="card-title">
+                {{ apptfilter.doctime }} hrs<br />
+                {{ apptfilter.appointmentDate }}
+              </h5>
+            </div>
+
+            <a
+              class="btn btn-danger m-auto"
+              (click)="onClickCancelAppointment(apptfilter)"
+              >Cancel</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="doctor-list">
+    <i
+      ><h4 style="color: rgba(1, 133, 1, 0.705); font-weight: strong">
+        All Doctors
+      </h4></i
+    >
+    <div class="row">
+      <div class="col-sm-3 my-3 container" *ngFor="let doctor of doctors">
+        <div
+          class="card mx-auto"
+          style="background-color: rgb(245, 245, 245); box-shadow: 1cm"
+        >
+          <div class="content">
+            <!-- src="https://img.collegedekhocdn.com/media/img/careers/doctor-clinic.jpg" -->
+            <img
+              class="card-img-top"
+              src="/assets/doctor-profile.jpg"
+              style="opacity: 85%"
+            />
+            <div class="card-body" style="justify-content: center">
+              <h5 class="card-title">
+                Dr. {{ doctor.docfirstname }} {{ doctor.doclastname }}
+              </h5>
+              <p class="card-text">
+                {{ doctor.docspecialization }}<br />
+                {{ doctor.docqualification }}<br />
+                {{ doctor.cliniccity }}<br />
+              </p>
+              <p class="card-text mx-auto">
+                <a *ngIf="doctor.mon == true">Mon </a>
+                <a *ngIf="doctor.tues == true">Tues </a>
+                <a *ngIf="doctor.wed == true">Wed </a>
+                <a *ngIf="doctor.thurs == true">Thurs </a>
+                <a *ngIf="doctor.fri == true">Fri </a>
+                <a *ngIf="doctor.sat == true">Sat </a>
+                <a *ngIf="doctor.sun == true">Sun </a>
+              </p>
+              <a class="btn btn-success" (click)="toAppointmentPage(doctor)"
+                >Book Appointment</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</html>

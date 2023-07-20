@@ -1,0 +1,37 @@
+<div class="patient-list">
+  <h2 *ngIf="results.length != 0">Appointments</h2>
+  <h2 *ngIf="results.length == 0">No appointments yet.</h2>
+  <div class="" *ngFor="let result of results">
+    <div class="card">
+      <div class="card-body d-flex">
+        <div class="patient-information m-auto">
+          <h5 class="card-title">
+            {{ result.patfirstname }} {{ result.patlastname }}
+          </h5>
+          <p class="card-text">
+            Phone: {{ result.patphone }}<br />
+            Email: {{ result.patemail }}
+          </p>
+        </div>
+        <div class="appointment-information m-auto">
+          <p class="card-text">
+            Date: {{ result.appointmentDate }}<br />
+            Time: {{ result.doctime }} hours
+          </p>
+        </div>
+        <div class="clinic-details m-auto">
+          <p class="card-text">
+            Clinic: {{ result.clinicname }}<br />
+            Address: {{ result.clinicaddress }}
+          </p>
+        </div>
+
+        <a
+          class="btn btn-danger m-auto"
+          (click)="onClickCancelAppointment(result)"
+          >Cancel</a
+        >
+      </div>
+    </div>
+  </div>
+</div>

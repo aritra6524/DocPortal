@@ -1,18 +1,4 @@
-.divider:after,
-.divider:before {
-content: "";
-flex: 1;
-height: 1px;
-background: white;
-}
-.h-custom {
-height: calc(100% - 73px);
-}
-.login-card{
-    background-color: #eee;
-}
-@media (max-width: 450px) {
-.h-custom {
-height: 100%;
-}
+html{
+    background: url('/assets/8507-removebg-preview.png') no-repeat center;
+    background-size: cover;
 }

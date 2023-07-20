@@ -1,0 +1,52 @@
+<!-- <app-doctor-list></app-doctor-list> -->
+<h2>List of Doctors</h2>
+<div class="row">
+  <div class="col-sm-6" *ngFor="let doctor of doctors">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          Dr. {{ doctor.docfirstname }} {{ doctor.doclastname }}
+        </h5>
+        <p class="card-text">{{ doctor.docregd }}</p>
+        <p class="card-text">{{ doctor.docspecialization }}</p>
+        <p class="card-text">{{ doctor.docqualification }}</p>
+        <p class="card-text">{{ doctor.docphone }}</p>
+        <p class="card-text">{{ doctor.docemail }}</p>
+        <p class="card-text">{{ doctor.clinicname }}</p>
+        <p class="card-text">{{ doctor.cliniccity }}</p>
+        <p class="card-text">{{ doctor.clinicaddress }}</p>
+        <p class="card-text">{{ doctor.doctime }}</p>
+        <p class="card-text">
+          <a *ngIf="doctor.mon == true">Mon </a>
+          <a *ngIf="doctor.tues == true">Tues </a>
+          <a *ngIf="doctor.wed == true">Wed </a>
+          <a *ngIf="doctor.thurs == true">Thurs </a>
+          <a *ngIf="doctor.fri == true">Fri </a>
+          <a *ngIf="doctor.sat == true">Sat </a>
+          <a *ngIf="doctor.sun == true">Sun </a>
+        </p>
+        <button class="btn btn-danger" (click)="onClickDeleteDoctor(doctor)">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>List of Patients</h2>
+<div class="row p-0 m-0">
+  <div class="col-6 p-0 m-0" *ngFor="let patient of patients">
+    <div class="container p-0 m-0 bg-white row d-flex">
+      <div class="col-sm-6 p-0 m-0">
+        <h5>{{ patient.patfirstname }} {{ patient.patlastname }}</h5>
+        <p class="card-text m-0">{{ patient.patemail }}</p>
+        <p class="card-text m-0">{{ patient.patphone }}</p>
+      </div>
+      <div class="col-sm-6 p-0 m-0">
+        <button class="btn btn-danger" (click)="onClickDeletePatient(patient)">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

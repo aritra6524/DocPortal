@@ -1,0 +1,10 @@
+.login-btn {
+    border: none;
+    background-color: rgba(1, 133, 1, 0.651);
+    color: white;
+    width: 100px;
+}
+
+nav{
+    background-color: rgb(255, 255, 255);
+}
