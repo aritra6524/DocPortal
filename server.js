@@ -30,6 +30,10 @@ const patientsApp = require("./apis/patientsApi");
 app.use("/doctors-api", doctorsApp);
 app.use("/patients-api", patientsApp);
 
+app.use((req, res, next) => {
+  res.sendFile(path.join(__dirname, "./dist/docportal/index.html"));
+});
+
 //assign port
 app.listen(3000, () => {
   console.log("server listening on port 3000...");

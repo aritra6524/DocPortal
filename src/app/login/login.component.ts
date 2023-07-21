@@ -14,6 +14,7 @@ export class LoginComponent {
   loginAdminForm: FormGroup;
   status: boolean;
   profileType: string = 'Patient';
+  errorMsg: string;
 
   constructor(private serviceObj: RegisterService, private router: Router) {}
 
@@ -38,24 +39,32 @@ export class LoginComponent {
 
   onPatLogin() {
     const patientCredObj = this.loginPatForm.value;
-    this.serviceObj.getuserCredPat(patientCredObj.patemail).subscribe({
+    this.serviceObj.loginPatient(patientCredObj).subscribe({
       next: (response) => {
-        if (response.length != 0) {
-          if (patientCredObj.patpassword == response[0].patpassword) {
-            //update global state
-            this.serviceObj.setLoginStatus(true);
-            this.serviceObj.setCurrentPatient(response[0]);
-            //navigate to dashboard
-            this.router.navigate([
-              '/dashboard/doctor-list',
-              patientCredObj.patemail,
-            ]);
-          } else {
-            alert('Invalid Password');
-          }
+        if (response['message'] == 'Login success') {
+          this.errorMsg = '';
+          //navigate
+          this.router.navigate(['/dashboard/doctor-list']);
         } else {
-          alert('Invalid! Patient Not Found');
+          this.errorMsg = response['message'];
         }
+
+        // if (response.length != 0) {
+        //   if (patientCredObj.patpassword == response[0].patpassword) {
+        //     //update global state
+        //     this.serviceObj.setLoginStatus(true);
+        //     this.serviceObj.setCurrentPatient(response[0]);
+        //     //navigate to dashboard
+        //     this.router.navigate([
+        //       '/dashboard/doctor-list',
+        //       patientCredObj.patemail,
+        //     ]);
+        //   } else {
+        //     alert('Invalid Password');
+        //   }
+        // } else {
+        //   alert('Invalid! Patient Not Found');
+        // }
       },
       error: (err) => {
         console.log('Error occurred:', err);
@@ -64,25 +73,37 @@ export class LoginComponent {
   }
 
   onDocLogin(): void {
-    const doctorCredObj = this.loginDocForm.value;
-    this.serviceObj.getuserCredDoc(doctorCredObj.docemail).subscribe({
+    let doctorCredObj = this.loginDocForm.value;
+    this.serviceObj.loginDoctor(doctorCredObj).subscribe({
       next: (response) => {
-        if (response.length != 0) {
-          if (doctorCredObj.docpassword == response[0].docpassword) {
-            //update global state
-            this.serviceObj.setLoginStatus(true);
-            this.serviceObj.setCurrentDoctor(response[0]);
-            //navigate to dashboard
-            this.router.navigate([
-              '/dashboard/patient-list',
-              doctorCredObj.docemail,
-            ]);
-          } else {
-            alert('Invalid Password');
-          }
+        console.log(response['message']);
+        if (response['message'] == 'Login success') {
+          this.errorMsg = '';
+          //navigate
+          this.router.navigate([
+            '/dashboard/patient-list',
+            doctorCredObj.docemail,
+          ]);
         } else {
-          alert('Invalid! Doctor Not Found');
+          this.errorMsg = response['message'];
         }
+
+        // if (response.length != 0) {
+        //   if (doctorCredObj.docpassword == response[0].docpassword) {
+        //     //update global state
+        //     this.serviceObj.setLoginStatus(true);
+        //     this.serviceObj.setCurrentDoctor(response[0]);
+        //     //navigate to dashboard
+        //     this.router.navigate([
+        //       '/dashboard/patient-list',
+        //       doctorCredObj.docemail,
+        //     ]);
+        //   } else {
+        //     alert('Invalid Password');
+        //   }
+        // } else {
+        //   alert('Invalid! Doctor Not Found');
+        // }
       },
       error: (err) => {
         console.log('Error occurred:', err);

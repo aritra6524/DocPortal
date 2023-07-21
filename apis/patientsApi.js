@@ -1,8 +1,9 @@
 //create mini-express app(Separate route)
 const exp = require("express");
 const patientsApp = exp.Router();
-// const verifyToken = require("./middlewares/verifyToken");
+const verifyToken = require("./middlewares/verifyToken");
 const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 //body parser
 patientsApp.use(exp.json());
@@ -60,41 +61,46 @@ patientsApp.post("/patients", async (req, res) => {
   }
 });
 
-// //patient login
-// patientsApp.post("/patient-login", async (req, res) => {
-//   //get patientsCollection
-//   const patientsCollection = req.app.get("patientsCollection");
-//   //get user cred
-//   let patientCred = req.body;
-//   //verify username
-//   let patient = await patientsCollection.findOne({ email: patientCred.email });
-//   //if patient not found
-//   if (patient == null) {
-//     res.send({ message: "Invalid username" });
-//   }
-//   //if patient found
-//   else {
-//     //compare passwords
-//     let result = await bcryptjs.compare(patientCred.password, patient.password);
-//     //if passwords not matched
-//     if (result == false) {
-//       res.send({ message: "Invalid password" });
-//     }
-//     //if passwords matched
-//     else {
-//       //create token
-//       let signedToken = jwt.sign({ email: patient.email }, "abcdef", {
-//         expiresIn: 100,
-//       });
-//       //send token in res
-//       res.send({
-//         message: "Login success",
-//         token: signedToken,
-//         currentUser: user,
-//       });
-//     }
-//   }
-// });
+//patient login
+patientsApp.post("/patient-login", async (req, res) => {
+  //get patientsCollection
+  const patientsCollection = req.app.get("patientsCollection");
+  //get patient cred
+  let patientCred = req.body;
+  //verify email
+  let patient = await patientsCollection.findOne({
+    patemail: patientCred.patemail,
+  });
+  //if patient not found
+  if (patient == null) {
+    res.send({ message: "Invalid username" });
+  }
+  //if patient found
+  else {
+    //compare passwords
+    let result = await bcryptjs.compare(
+      patientCred.patpassword,
+      patient.patpassword
+    );
+    //if passwords not matched
+    if (result == false) {
+      res.send({ message: "Invalid password" });
+    }
+    //if passwords matched
+    else {
+      //create token
+      let signedToken = jwt.sign({ patemail: patient.patemail }, "abcdef", {
+        expiresIn: 100,
+      });
+      //send token in res
+      res.send({
+        message: "Login success",
+        token: signedToken,
+        currentPatient: patient,
+      });
+    }
+  }
+});
 
 // //update patient by email
 // patientsApp.put("/patients", async (req, res) => {

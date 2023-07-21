@@ -28,6 +28,11 @@
       </div>
     </div>
 
+    <!--display login error msg-->
+    <p class="text-danger display-6 text-center" *ngIf="errorMsg?.length != 0">
+      {{ errorMsg }}
+    </p>
+
     <form
       *ngIf="profileType == 'Patient'"
       [formGroup]="loginPatForm"

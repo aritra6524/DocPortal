@@ -62,6 +62,20 @@ export class RegisterService {
     );
   }
 
+  loginPatient(patientCredObj: any) {
+    return this.hC.post(
+      'http://localhost:3000/patients-api/patient-login',
+      patientCredObj
+    );
+  }
+
+  loginDoctor(doctorCredObj: any) {
+    return this.hC.post(
+      'http://localhost:3000/doctors-api/doctor-login',
+      doctorCredObj
+    );
+  }
+
   getuserCredPat(emailid) {
     return this.hC.get<Patient[]>(
       `http://localhost:3000/patient?patemail=${emailid}`
