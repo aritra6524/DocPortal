@@ -11,7 +11,7 @@ doctorsApp.use(exp.json());
 
 //CREATE USER API
 
-//get all users
+//get all doctors
 doctorsApp.get(
   "/doctors",
   expressAsyncHandler(async (req, res) => {
