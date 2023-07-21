@@ -76,7 +76,8 @@ interface Patient {
 export class DoctorListComponent implements OnInit {
   docForm: FormGroup;
 
-  selectedPatient: Patient;
+  // selectedPatient: Patient;
+  currentPatient = {};
   doctors: Doctor[] = [];
   appointments: Appointment[] = [];
   results: Result[] = [];
@@ -96,14 +97,14 @@ export class DoctorListComponent implements OnInit {
   }
 
   fetchDoctors() {
-    this.hC.get<Doctor[]>('http://localhost:3000/doctor').subscribe(
-      (data) => {
-        this.doctors = data;
+    this.registerServiceObj.getAllDoctors().subscribe({
+      next: (response) => {
+        this.doctors = response['payload'];
       },
-      (error) => {
-        console.error('Error fetching doctors:', error);
-      }
-    );
+      error: (err) => {
+        console.log('Error is:', err);
+      },
+    });
   }
 
   toAppointmentPage(doctor) {
@@ -113,25 +114,25 @@ export class DoctorListComponent implements OnInit {
 
   fetchAppointments() {
     this.registerServiceObj.getCurrentPatient().subscribe({
-      next: (data) => {
-        this.selectedPatient = data;
+      next: (currentLoggedInPatient) => {
+        this.currentPatient = currentLoggedInPatient;
       },
       error: (error) => {
         console.error('Error fetching patients:', error);
       },
     });
 
-    this.hC.get<Appointment[]>('http://localhost:3000/appointment').subscribe(
-      (data) => {
-        this.appointments = data;
-        this.apptfilters = this.appointments.filter(
-          (element) => element.patemail == this.selectedPatient.patemail
-        );
-      },
-      (error) => {
-        console.error('Error fetching doctors:', error);
-      }
-    );
+    // this.hC.get<Appointment[]>('http://localhost:3000/appointment').subscribe(
+    //   (data) => {
+    //     this.appointments = data;
+    //     this.apptfilters = this.appointments.filter(
+    //       (element) => element.patemail == this.currentPatient.patemail
+    //     );
+    //   },
+    //   (error) => {
+    //     console.error('Error fetching doctors:', error);
+    //   }
+    // );
 
     // console.log(this.apptfilters);
     //   let count = 1;

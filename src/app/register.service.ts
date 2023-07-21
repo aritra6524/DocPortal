@@ -76,6 +76,10 @@ export class RegisterService {
     );
   }
 
+  getAllDoctors() {
+    return this.hC.get('http://localhost:3000/doctors-api/doctors');
+  }
+
   getuserCredPat(emailid) {
     return this.hC.get<Patient[]>(
       `http://localhost:3000/patient?patemail=${emailid}`

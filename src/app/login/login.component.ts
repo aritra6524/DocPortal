@@ -43,8 +43,12 @@ export class LoginComponent {
       next: (response) => {
         if (response['message'] == 'Login success') {
           this.errorMsg = '';
+
           //navigate
-          this.router.navigate(['/dashboard/doctor-list']);
+          this.router.navigate([
+            '/dashboard/doctor-list',
+            patientCredObj.patemail,
+          ]);
         } else {
           this.errorMsg = response['message'];
         }
@@ -76,7 +80,6 @@ export class LoginComponent {
     let doctorCredObj = this.loginDocForm.value;
     this.serviceObj.loginDoctor(doctorCredObj).subscribe({
       next: (response) => {
-        console.log(response['message']);
         if (response['message'] == 'Login success') {
           this.errorMsg = '';
           //navigate
