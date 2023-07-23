@@ -17,10 +17,8 @@ appointmentsApp.get(
   expressAsyncHandler(async (req, res) => {
     //get appointmentsCollection
     const appointmentsCollection = req.app.get("appointmentsCollection");
-    //get appointment
-    let appointments = await appointmentsCollection
-      .find({ status: true })
-      .toArray();
+    //get appointments
+    let appointments = await appointmentsCollection.find().toArray();
     //send res
     res.send({ message: "all appointments", payload: appointments });
   })

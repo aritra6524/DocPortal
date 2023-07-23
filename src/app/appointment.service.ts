@@ -32,8 +32,8 @@ export class AppointmentService {
     );
   }
 
-  addAppointmentDate(date) {
-    return this.hC.post('http://localhost:3000/appointment', date);
+  getAllAppointments() {
+    return this.hC.get('http://localhost:3000/appointments-api/appointments');
   }
 
   cancelAppointment(appointment: any) {
