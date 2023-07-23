@@ -26,7 +26,10 @@ export class AppointmentService {
   }
 
   setAppointment(appointment) {
-    return this.hC.post('http://localhost:3000/appointment', appointment);
+    return this.hC.post(
+      'http://localhost:3000/appointments-api/appointments',
+      appointment
+    );
   }
 
   addAppointmentDate(date) {
