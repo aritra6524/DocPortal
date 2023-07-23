@@ -37,12 +37,22 @@ export class AppointmentService {
   }
 
   cancelAppointment(appointment: any) {
-    return this.hC
-      .delete(`http://localhost:3000/appointment/${appointment.id}`)
+    this.hC
+      .delete(
+        `http://localhost:3000/appointments-api/appointments/${appointment._id}`
+      )
       .subscribe(
-        (data) => {},
-        (error) => {}
+        (response) => {
+          console.log(response); // Document deleted successfully
+        },
+        (error) => {
+          console.error(error);
+        }
       );
+
+    // return this.hC.delete(
+    //   `http://localhost:3000/appointments-api/appointments/${appointment._id}`
+    // );
   }
 
   deleteDoctor(doctor) {

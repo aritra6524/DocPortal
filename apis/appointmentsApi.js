@@ -71,21 +71,27 @@ appointmentsApp.post(
 //   })
 // );
 
-//delete appointment by email
+//delete appointment by id
 appointmentsApp.delete(
-  "/appointments/:docemail",
+  "/appointments/:id",
   expressAsyncHandler(async (req, res) => {
     //get appointmentsCollection
     const appointmentsCollection = req.app.get("appointmentsCollection");
     //get email from url
-    let emailOfUrl = req.params.email;
+    let idOfUrl = req.params.id;
     //update user status to false
-    await appointmentsCollection.updateOne(
-      { docemail: emailOfUrl },
-      { $set: { status: false } }
-    );
+    // console.log("_id=" + _id);
+    // console.log("idOfUrl=" + idOfUrl);
+    const result = await appointmentsCollection.deleteOne({ _id: idOfUrl });
+
+    if (result.deletedCount === 1) {
+      res.send({ message: "Appointment deleted." });
+    } else {
+      res.status(404).json({ message: "Appointment not found." });
+    }
+
     //send res
-    res.send({ message: "appointment deleted" });
+    // res.send({ message: "appointment deleted" });
   })
 );
 

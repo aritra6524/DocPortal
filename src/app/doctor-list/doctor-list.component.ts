@@ -165,6 +165,7 @@ export class DoctorListComponent implements OnInit {
   }
 
   onClickCancelAppointment(result: any) {
+    // this.appointmentServiceObj.cancelAppointment(result);
     this.appointmentServiceObj.cancelAppointment(result);
     this.router
       .navigateByUrl('/dashboard', { skipLocationChange: true })
