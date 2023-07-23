@@ -76,8 +76,8 @@ interface Patient {
 export class DoctorListComponent implements OnInit {
   docForm: FormGroup;
 
-  // selectedPatient: Patient;
-  currentPatient = {};
+  selectedPatient: Patient;
+  // currentPatient = {};
   doctors: Doctor[] = [];
   appointments: Appointment[] = [];
   results: Result[] = [];
@@ -93,7 +93,7 @@ export class DoctorListComponent implements OnInit {
 
   ngOnInit() {
     this.fetchDoctors();
-    this.fetchAppointments();
+    // this.fetchAppointments();
   }
 
   fetchDoctors() {
@@ -115,24 +115,24 @@ export class DoctorListComponent implements OnInit {
   fetchAppointments() {
     this.registerServiceObj.getCurrentPatient().subscribe({
       next: (currentLoggedInPatient) => {
-        this.currentPatient = currentLoggedInPatient;
+        this.selectedPatient = currentLoggedInPatient;
       },
       error: (error) => {
         console.error('Error fetching patients:', error);
       },
     });
 
-    // this.hC.get<Appointment[]>('http://localhost:3000/appointment').subscribe(
-    //   (data) => {
-    //     this.appointments = data;
-    //     this.apptfilters = this.appointments.filter(
-    //       (element) => element.patemail == this.currentPatient.patemail
-    //     );
-    //   },
-    //   (error) => {
-    //     console.error('Error fetching doctors:', error);
-    //   }
-    // );
+    this.hC.get<Appointment[]>('http://localhost:3000/appointment').subscribe(
+      (data) => {
+        this.appointments = data;
+        this.apptfilters = this.appointments.filter(
+          (element) => element.patemail == this.selectedPatient.patemail
+        );
+      },
+      (error) => {
+        console.error('Error fetching doctors:', error);
+      }
+    );
 
     // console.log(this.apptfilters);
     //   let count = 1;

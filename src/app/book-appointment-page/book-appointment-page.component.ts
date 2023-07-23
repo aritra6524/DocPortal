@@ -57,7 +57,7 @@ interface Appointment {
   patemail: string;
   patphone: number;
   appointmentDate: string;
-  queue: number;
+  // queue: number;
 }
 
 @Component({
@@ -76,11 +76,10 @@ export class BookAppointmentPageComponent implements OnInit {
   selectedPatient: Patient = null;
   appointment: Appointment = null;
   appointmentForm: FormGroup;
-  appointmentDate: FormControl = null;
 
   ngOnInit(): void {
     this.appointmentForm = new FormGroup({
-      appointmentDate: new FormControl(),
+      appointmentDate: new FormControl(null),
     });
 
     this.getDate();
@@ -102,7 +101,7 @@ export class BookAppointmentPageComponent implements OnInit {
       },
     });
 
-    this.checkInvalidDate(this.appointmentDate.value);
+    // this.checkInvalidDate(this.appointmentDate.value);
   }
 
   minDate: any = '';
@@ -122,18 +121,20 @@ export class BookAppointmentPageComponent implements OnInit {
   }
 
   flag: boolean = false;
-  checkInvalidDate(appointmentDate) {
-    console.log(this.appointmentDate.value.getDay());
-    if (
-      this.appointmentDate.value.getDay() === 0 ||
-      this.appointmentDate.value.getDay() === 6
-    ) {
-      alert('Invalid');
-      this.flag = true;
-    }
-  }
+  // checkInvalidDate(appointmentDate) {
+  //   console.log(this.appointmentDate.value.getDay());
+  //   if (
+  //     this.appointmentForm.value.subscribe appointmentDate.value.getDay() === 0 ||
+  //     this.appointmentDate.value.getDay() === 6
+  //   ) {
+  //     alert('Invalid');
+  //     this.flag = true;
+  //   }
+  // }
 
   bookAppointment() {
+    const appointmentFormObj = this.appointmentForm.value;
+
     this.appointment = Object.assign({
       docfirstname: this.selectedDoctor.docfirstname,
       doclastname: this.selectedDoctor.doclastname,
@@ -150,6 +151,7 @@ export class BookAppointmentPageComponent implements OnInit {
       patlastname: this.selectedPatient.patlastname,
       patemail: this.selectedPatient.patemail,
       patphone: this.selectedPatient.patphone,
+      appointmentDate: appointmentFormObj.appointmentDate,
     });
 
     this.serviceObj.setAppointment(this.appointment).subscribe({
@@ -159,7 +161,7 @@ export class BookAppointmentPageComponent implements OnInit {
       },
     });
 
-    console.log(this.appointmentDate);
+    console.log(appointmentFormObj.appointmentDate);
     //this.checkInvalidDate(this.appointmentDate);
 
     alert(

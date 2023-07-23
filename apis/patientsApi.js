@@ -10,30 +10,30 @@ patientsApp.use(exp.json());
 
 //CREATE USER API
 
-// //get all users
-// patientsApp.get("/patients", async (req, res) => {
-//   //get patientsCollection
-//   const patientsCollection = req.app.get("patientsCollection");
-//   //get users
-//   let user = await patientsCollection.find({ status: true }).toArray();
-//   //send res
-//   res.send({ message: "all patients", payload: patients });
-// });
+//get all patients
+patientsApp.get("/patients", async (req, res) => {
+  //get patientsCollection
+  const patientsCollection = req.app.get("patientsCollection");
+  //get users
+  let user = await patientsCollection.find({ status: true }).toArray();
+  //send res
+  res.send({ message: "all patients", payload: patients });
+});
 
-// //get a patient by email
-// userApp.get("/patients/:email", async (req, res) => {
-//   //get patientsCollection
-//   const patientsCollection = req.app.get("patientsCollection");
-//   //get email from url
-//   let emailOfUrl = req.params.email;
-//   //find user
-//   let patient = await patientsCollection.findOne({
-//     email: emailOfUrl,
-//     status: true,
-//   });
-//   //send res
-//   res.send({ message: "One user", payload: patient });
-// });
+//get a patient by email
+patientsApp.get("/patients/:email", async (req, res) => {
+  //get patientsCollection
+  const patientsCollection = req.app.get("patientsCollection");
+  //get email from url
+  let emailOfUrl = req.params.email;
+  //find user
+  let patient = await patientsCollection.findOne({
+    email: emailOfUrl,
+    status: true,
+  });
+  //send res
+  res.send({ message: "One user", payload: patient });
+});
 
 //create register patient
 patientsApp.post("/patients", async (req, res) => {

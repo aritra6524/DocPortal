@@ -42,6 +42,8 @@ export class LoginComponent {
     this.serviceObj.loginPatient(patientCredObj).subscribe({
       next: (response) => {
         if (response['message'] == 'Login success') {
+          console.log(response['currentPatient']);
+          this.serviceObj.setCurrentPatient(response['currentPatient']);
           this.errorMsg = '';
 
           //navigate

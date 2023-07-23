@@ -42,8 +42,8 @@ export class RegisterService {
   }
 
   //update current patient
-  setCurrentPatient(userObj) {
-    this.currentPatientBehaviorSubject.next(userObj);
+  setCurrentPatient(patient) {
+    this.currentPatientBehaviorSubject.next(patient);
   }
 
   //get current patient
@@ -97,6 +97,10 @@ export class RegisterService {
       `http://localhost:3000/admin?username=${username}`
     );
   }
+
+  // getPatientByEmail(email) {
+  //   return this.hC.get(`http://localhost:3000/patients/:${email}`);
+  // }
 }
 
 export interface Patient {
