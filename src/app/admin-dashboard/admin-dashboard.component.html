@@ -33,6 +33,40 @@
   </div>
 </div>
 
+<h2>Deleted Doctors</h2>
+<div class="row">
+  <div class="col-sm-6" *ngFor="let deletedDoctor of deletedDoctors">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">
+          Dr. {{ deletedDoctor.docfirstname }} {{ deletedDoctor.doclastname }}
+        </h5>
+        <p class="card-text">{{ deletedDoctor.docregd }}</p>
+        <p class="card-text">{{ deletedDoctor.docspecialization }}</p>
+        <p class="card-text">{{ deletedDoctor.docqualification }}</p>
+        <p class="card-text">{{ deletedDoctor.docphone }}</p>
+        <p class="card-text">{{ deletedDoctor.docemail }}</p>
+        <p class="card-text">{{ deletedDoctor.clinicname }}</p>
+        <p class="card-text">{{ deletedDoctor.cliniccity }}</p>
+        <p class="card-text">{{ deletedDoctor.clinicaddress }}</p>
+        <p class="card-text">{{ deletedDoctor.doctime }}</p>
+        <p class="card-text">
+          <a *ngIf="deletedDoctor.mon == true">Mon </a>
+          <a *ngIf="deletedDoctor.tues == true">Tues </a>
+          <a *ngIf="deletedDoctor.wed == true">Wed </a>
+          <a *ngIf="deletedDoctor.thurs == true">Thurs </a>
+          <a *ngIf="deletedDoctor.fri == true">Fri </a>
+          <a *ngIf="deletedDoctor.sat == true">Sat </a>
+          <a *ngIf="deletedDoctor.sun == true">Sun </a>
+        </p>
+        <button class="btn btn-success" (click)="onClickRestoreDoctor(deletedDoctor)">
+          Restore
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <h2>List of Patients</h2>
 <div class="row p-0 m-0">
   <div class="col-6 p-0 m-0" *ngFor="let patient of patients">
@@ -45,6 +79,24 @@
       <div class="col-sm-6 p-0 m-0">
         <button class="btn btn-danger" (click)="onClickDeletePatient(patient)">
           Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h2>Deleted Patients</h2>
+<div class="row p-0 m-0">
+  <div class="col-6 p-0 m-0" *ngFor="let deletedPatient of deletedPatients">
+    <div class="container p-0 m-0 bg-white row d-flex">
+      <div class="col-sm-6 p-0 m-0">
+        <h5>{{ deletedPatient.patfirstname }} {{ deletedPatient.patlastname }}</h5>
+        <p class="card-text m-0">{{ deletedPatient.patemail }}</p>
+        <p class="card-text m-0">{{ deletedPatient.patphone }}</p>
+      </div>
+      <div class="col-sm-6 p-0 m-0">
+        <button class="btn btn-success" (click)="onClickRestorePatient(deletedPatient)">
+          Restore
         </button>
       </div>
     </div>

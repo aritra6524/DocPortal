@@ -20,7 +20,9 @@ export class AdminDashboardComponent implements OnInit {
   ) {}
 
   doctors: Doctor[] = [];
+  deletedDoctors: Doctor[] = [];
   patients: Patient[] = [];
+  deletedPatients: Patient[] = [];
 
   ngOnInit() {
     this.fetchDoctors();
@@ -28,6 +30,8 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   fetchDoctors() {
+
+    //fetch all doctors
     this.registerServiceObj.getAllDoctors().subscribe({
       next: (response) => {
         this.doctors = response['payload'];
@@ -36,9 +40,20 @@ export class AdminDashboardComponent implements OnInit {
         console.log('Error is:', err);
       },
     });
+
+    //fetch deleted doctors
+    this.registerServiceObj.getDeletedDoctors().subscribe({
+      next:(response) => {
+        this.deletedDoctors = response['payload'];
+      },
+      error: (err) => {
+        console.log("Error is: ",err);
+      }
+    })
   }
 
   fetchPatients() {
+    //fetch all patients
     this.registerServiceObj.getAllPatients().subscribe({
       next: (response) => {
         this.patients = response['payload'];
@@ -47,19 +62,59 @@ export class AdminDashboardComponent implements OnInit {
         console.log('Error is:', err);
       },
     });
+
+    //fetch deleted patients
+    this.registerServiceObj.getDeletedPatients().subscribe({
+      next:(response) => {
+        this.deletedPatients = response['payload'];
+      },
+      error: (err) => {
+        console.log("Error is: ",err);
+      }
+    })
   }
 
   onClickDeleteDoctor(doctor) {
-    this.appointmentServiceObj.deleteDoctor(doctor);
+    this.registerServiceObj.deleteDoctor(doctor).subscribe({
+      next:(response) => {
+        alert(
+          'Dr. ' +
+            doctor.docfirstname +
+            ' ' +
+            doctor.doclastname +
+            ' - ' +
+            'Profile Deleted!'
+        );
+        // this.ngOnInit();
+      },
+      error:(err)=> {
+        console.log("Error is :",err);
+      }
+    })
 
-    alert(
-      'Dr. ' +
-        doctor.docfirstname +
-        ' ' +
-        doctor.doclastname +
-        ' - ' +
-        'Profile Deleted!'
-    );
+    //Refresh the component
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([decodeURI(this.location.path())]);
+    });
+  }
+
+  onClickRestoreDoctor(doctor) {
+    this.registerServiceObj.restoreDoctor(doctor).subscribe({
+      next:(response) => {
+        alert(
+          'Dr. ' +
+            doctor.docfirstname +
+            ' ' +
+            doctor.doclastname +
+            ' - ' +
+            'Profile Restored'
+        );
+      },
+      error:(err)=> {
+        console.log("Error is :",err);
+      }
+    })
+
     //Refresh the component
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([decodeURI(this.location.path())]);
@@ -67,15 +122,43 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   onClickDeletePatient(patient) {
-    this.appointmentServiceObj.deletePatient(patient);
+    this.registerServiceObj.deletePatient(patient).subscribe({
+      next:(response) => {
+        alert(
+            patient.patfirstname +
+            ' ' +
+            patient.patlastname +
+            ' - ' +
+            'Profile Deleted!'
+        );
+      },
+      error:(err)=> {
+        console.log("Error is :",err);
+      }
+    })
 
-    alert(
-      patient.patfirstname +
-        ' ' +
-        patient.patlastname +
-        ' - ' +
-        'Profile Deleted!'
-    );
+    //Refresh the component
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([decodeURI(this.location.path())]);
+    });
+  }
+
+  onClickRestorePatient(patient) {
+    this.registerServiceObj.restorePatient(patient).subscribe({
+      next:(response) => {
+        alert(
+            patient.patfirstname +
+            ' ' +
+            patient.patlastname +
+            ' - ' +
+            'Profile Restored'
+        );
+      },
+      error:(err)=> {
+        console.log("Error is :",err);
+      }
+    })
+
     //Refresh the component
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([decodeURI(this.location.path())]);

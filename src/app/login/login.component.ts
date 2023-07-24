@@ -34,6 +34,7 @@ export class LoginComponent {
   }
 
   setProfile(profile: string): void {
+    this.errorMsg='';
     this.profileType = profile;
   }
 
@@ -42,6 +43,7 @@ export class LoginComponent {
     this.serviceObj.loginPatient(patientCredObj).subscribe({
       next: (response) => {
         if (response['message'] == 'Login success') {
+          this.serviceObj.setLoginStatus(true);
           this.serviceObj.setCurrentPatient(response['currentPatient']);
           this.errorMsg = '';
 
@@ -53,23 +55,6 @@ export class LoginComponent {
         } else {
           this.errorMsg = response['message'];
         }
-
-        // if (response.length != 0) {
-        //   if (patientCredObj.patpassword == response[0].patpassword) {
-        //     //update global state
-        //     this.serviceObj.setLoginStatus(true);
-        //     this.serviceObj.setCurrentPatient(response[0]);
-        //     //navigate to dashboard
-        //     this.router.navigate([
-        //       '/dashboard/doctor-list',
-        //       patientCredObj.patemail,
-        //     ]);
-        //   } else {
-        //     alert('Invalid Password');
-        //   }
-        // } else {
-        //   alert('Invalid! Patient Not Found');
-        // }
       },
       error: (err) => {
         console.log('Error occurred:', err);
@@ -82,6 +67,7 @@ export class LoginComponent {
     this.serviceObj.loginDoctor(doctorCredObj).subscribe({
       next: (response) => {
         if (response['message'] == 'Login success') {
+          this.serviceObj.setLoginStatus(true);
           this.serviceObj.setCurrentDoctor(response['currentDoctor']);
           this.errorMsg = '';
           //navigate
@@ -121,6 +107,7 @@ export class LoginComponent {
 
     if(adminCredObj.username == "admin"){
       if(adminCredObj.password == "admin"){
+        this.serviceObj.setLoginStatus(true);
         //navigate
           this.router.navigate([
             '/admin-dashboard'

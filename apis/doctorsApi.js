@@ -24,6 +24,19 @@ doctorsApp.get(
   })
 );
 
+//get all doctors with status false
+doctorsApp.get(
+  "/doctors-deleted",
+  expressAsyncHandler(async (req, res) => {
+    //get doctorsCollection
+    const doctorsCollection = req.app.get("doctorsCollection");
+    //get doctor
+    let doctors = await doctorsCollection.find({ status: false }).toArray();
+    //send res
+    res.send({ message: "all doctors", payload: doctors });
+  })
+);
+
 // //get a doctor by email
 // userApp.get("/doctors/:docemail", async (req, res) => {
 //   //get doctorsCollection
@@ -80,7 +93,7 @@ doctorsApp.post("/doctor-login", async (req, res) => {
   });
   //if doctor not found
   if (doctor == null) {
-    res.send({ message: "Invalid username" });
+    res.send({ message: "Doctor Not Found!" });
   }
   //if doctor found
   else {
@@ -128,40 +141,36 @@ doctorsApp.put(
 );
 
 //delete doctor by email
-doctorsApp.delete(
-  "/doctors/:docemail",
-  expressAsyncHandler(async (req, res) => {
-    //get doctorsCollection
-    const doctorsCollection = req.app.get("doctorsCollection");
-    //get email from url
-    let emailOfUrl = req.params.email;
-    //update user status to false
-    await doctorsCollection.updateOne(
-      { docemail: emailOfUrl },
-      { $set: { status: false } }
-    );
-    //send res
-    res.send({ message: "Doctor deleted" });
-  })
-);
+doctorsApp.delete("/doctors-delete/:email", async (req, res) => {
+  //get doctorsCollection
+  const doctorsCollection = req.app.get("doctorsCollection");
+  //get email from url
+  let emailOfUrl = req.params.email;
+  //update user status to false
+  let doctor = await doctorsCollection.findOne({ docemail: emailOfUrl, status: true  });
+  if(doctor==null){
+    res.send({message:"Doctor does not exist in DB"})
+  } else {
+    await doctorsCollection.updateOne({docemail:emailOfUrl}, {$set:{status:false}})
+    res.send({message:"Doctor is deleted"})
+  }
+});
 
 //restore doctor by email
-doctorsApp.get(
-  "/doctor-restore/:docemail",
-  expressAsyncHandler(async (req, res) => {
+doctorsApp.get("/doctors-restore/:docemail",async (req, res) => {
     //get doctorsCollection
     const doctorsCollection = req.app.get("doctorsCollection");
     //get email from url
     let emailOfUrl = req.params.email;
-    //update user status to false
-    await doctorsCollection.updateOne(
-      { docemail: emailOfUrl },
-      { $set: { status: true } }
-    );
-    //send res
-    res.send({ message: "Doctor restored" });
-  })
-);
+    //update user status to true
+  let doctor = await doctorsCollection.findOne({ docemail: emailOfUrl, status: false  });
+  if(doctor==null){
+    res.send({message:"Deleted doctor does not exist in DB"})
+  } else {
+    await doctorsCollection.updateOne({docemail:emailOfUrl}, {$set:{status:true}})
+    res.send({message:"Doctor is restored."})
+  }
+  });
 
 //private route
 doctorsApp.get("/test-private", verifyToken, (req, res) => {

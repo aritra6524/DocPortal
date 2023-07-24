@@ -80,8 +80,16 @@ export class RegisterService {
     return this.hC.get('http://localhost:3000/doctors-api/doctors');
   }
 
+  getDeletedDoctors() {
+    return this.hC.get('http://localhost:3000/doctors-api/doctors-deleted');
+  }
+
   getAllPatients() {
     return this.hC.get('http://localhost:3000/patients-api/patients');
+  }
+
+  getDeletedPatients() {
+    return this.hC.get('http://localhost:3000/patients-api/patients-deleted');
   }
 
   getuserCredPat(emailid) {
@@ -100,6 +108,22 @@ export class RegisterService {
     return this.hC.get<Admin[]>(
       `http://localhost:3000/admin?username=${username}`
     );
+  }
+
+  deleteDoctor(doctor){
+    return this.hC.delete(`http://localhost:3000/doctors-api/doctors-delete/${doctor.docemail}`)
+  }
+
+  deletePatient(patient) {
+    return this.hC.delete(`http://localhost:3000/patients-api/patients-delete/${patient.patemail}`)
+  }
+
+  restoreDoctor(doctor){
+    return this.hC.get(`http://localhost:3000/doctors-api/doctors-restore/${doctor.docemail}`)
+  }
+
+  restorePatient(patient){
+    return this.hC.get(`http://localhost:3000/patients-api/patients-restore/${patient.patemail}`)
   }
 
   // getPatientByEmail(email) {
