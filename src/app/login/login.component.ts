@@ -82,6 +82,7 @@ export class LoginComponent {
     this.serviceObj.loginDoctor(doctorCredObj).subscribe({
       next: (response) => {
         if (response['message'] == 'Login success') {
+          this.serviceObj.setCurrentDoctor(response['currentDoctor']);
           this.errorMsg = '';
           //navigate
           this.router.navigate([
@@ -117,8 +118,6 @@ export class LoginComponent {
 
   onAdminLogin(): void {
     let adminCredObj = this.loginAdminForm.value;
-    console.log(adminCredObj.username);
-    console.log(adminCredObj.password);
 
     if(adminCredObj.username == "admin"){
       if(adminCredObj.password == "admin"){

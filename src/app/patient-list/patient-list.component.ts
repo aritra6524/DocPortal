@@ -86,25 +86,25 @@ export class PatientListComponent implements OnInit {
 
   fetchAppointments() {
     this.registerServiceObj.getCurrentDoctor().subscribe({
-      next: (data) => {
-        this.selectedDoctor = data;
+      next: (currentLoggedInDoctor) => {
+        this.selectedDoctor = currentLoggedInDoctor;
       },
       error: (error) => {
-        console.error('Error fetching patients:', error);
+        console.error('Error fetching doctor:', error);
       },
     });
 
-    this.hC.get<Appointment[]>('http://localhost:3000/appointment').subscribe(
-      (data) => {
-        this.appointments = data;
+    this.appointmentServiceObj.getAllAppointments().subscribe({
+      next: (response) => {
+        this.appointments = response['payload'];
         this.results = this.appointments.filter(
           (element) => element.docemail == this.selectedDoctor.docemail
         );
       },
-      (error) => {
-        console.error('Error fetching doctors:', error);
-      }
-    );
+      error: (err) => {
+        console.log('Error is:', err);
+      },
+    });
   }
 
   onClickCancelAppointment(result: any) {

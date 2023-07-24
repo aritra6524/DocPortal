@@ -32,18 +32,18 @@ export class RegisterService {
   }
 
   //update current doctor
-  setCurrentDoctor(userObj) {
-    return this.currentDoctorBehaviorSubject.next(userObj);
-  }
-
-  //get current doctor
-  getCurrentDoctor() {
-    return this.currentDoctorBehaviorSubject.asObservable();
+  setCurrentDoctor(doctor) {
+    this.currentDoctorBehaviorSubject.next(doctor);
   }
 
   //update current patient
   setCurrentPatient(patient) {
     this.currentPatientBehaviorSubject.next(patient);
+  }
+
+  //get current doctor
+  getCurrentDoctor() {
+    return this.currentDoctorBehaviorSubject.asObservable();
   }
 
   //get current patient
