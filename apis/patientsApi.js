@@ -15,7 +15,7 @@ patientsApp.get("/patients", async (req, res) => {
   //get patientsCollection
   const patientsCollection = req.app.get("patientsCollection");
   //get users
-  let user = await patientsCollection.find({ status: true }).toArray();
+  let patients = await patientsCollection.find({ status: true }).toArray();
   //send res
   res.send({ message: "all patients", payload: patients });
 });

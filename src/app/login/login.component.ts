@@ -116,40 +116,51 @@ export class LoginComponent {
   }
 
   onAdminLogin(): void {
-    let doctorCredObj = this.loginAdminForm.value;
-    this.serviceObj.loginAdmin(doctorCredObj).subscribe({
-      next: (response) => {
-        if (response['message'] == 'Login success') {
-          this.errorMsg = '';
-          //navigate
+    let adminCredObj = this.loginAdminForm.value;
+    console.log(adminCredObj.username);
+    console.log(adminCredObj.password);
+
+    if(adminCredObj.username == "admin"){
+      if(adminCredObj.password == "admin"){
+        //navigate
           this.router.navigate([
-            '/dashboard/patient-list',
-            adminCredObj.email,
+            '/admin-dashboard'
           ]);
-        } else {
-          this.errorMsg = response['message'];
-        }
+      }
+    }
+    // this.serviceObj.loginAdmin(doctorCredObj).subscribe({
+    //   next: (response) => {
+    //     if (response['message'] == 'Login success') {
+    //       this.errorMsg = '';
+    //       //navigate
+    //       this.router.navigate([
+    //         '/dashboard/patient-list',
+    //         adminCredObj.email,
+    //       ]);
+    //     } else {
+    //       this.errorMsg = response['message'];
+    //     }
 
 
-    const adminCredObj = this.loginAdminForm.value;
-    this.serviceObj.getuserCredAdmin(adminCredObj.username).subscribe({
-      next: (response) => {
-        if (response.length != 0) {
-          if (adminCredObj.password == response[0].password) {
-            //update global state
-            this.serviceObj.setLoginStatus(true);
-            //navigate to dashboard
-            this.router.navigate(['/admin-dashboard']);
-          } else {
-            alert('Invalid Password');
-          }
-        } else {
-          alert('Invalid Username');
-        }
-      },
-      error: (err) => {
-        console.log('Error occurred:', err);
-      },
-    });
+    // const adminCredObj = this.loginAdminForm.value;
+    // this.serviceObj.getuserCredAdmin(adminCredObj.username).subscribe({
+    //   next: (response) => {
+    //     if (response.length != 0) {
+    //       if (adminCredObj.password == response[0].password) {
+    //         //update global state
+    //         this.serviceObj.setLoginStatus(true);
+    //         //navigate to dashboard
+    //         this.router.navigate(['/admin-dashboard']);
+    //       } else {
+    //         alert('Invalid Password');
+    //       }
+    //     } else {
+    //       alert('Invalid Username');
+    //     }
+    //   },
+    //   error: (err) => {
+    //     console.log('Error occurred:', err);
+    //   },
+    // });
   }
 }
