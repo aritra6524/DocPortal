@@ -113,7 +113,6 @@ export class AdminDashboardComponent implements OnInit {
         console.log('Error is :', err);
       },
     });
-
     //Refresh the component
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([decodeURI(this.location.path())]);
