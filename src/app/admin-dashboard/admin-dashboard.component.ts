@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppointmentService } from '../appointment.service';
 import { Location } from '@angular/common';
+import { RegisterService } from '../register.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -12,6 +13,7 @@ import { Location } from '@angular/common';
 export class AdminDashboardComponent implements OnInit {
   constructor(
     private hC: HttpClient,
+    private registerServiceObj: RegisterService,
     private appointmentServiceObj: AppointmentService,
     private location: Location,
     private router: Router
@@ -26,25 +28,25 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   fetchDoctors() {
-    this.hC.get<Doctor[]>('http://localhost:3000/doctor').subscribe(
-      (data) => {
-        this.doctors = data;
+    this.registerServiceObj.getAllDoctors().subscribe({
+      next: (response) => {
+        this.doctors = response['payload'];
       },
-      (error) => {
-        console.error('Error fetching doctors:', error);
-      }
-    );
+      error: (err) => {
+        console.log('Error is:', err);
+      },
+    });
   }
 
   fetchPatients() {
-    this.hC.get<Patient[]>('http://localhost:3000/patient').subscribe(
-      (data) => {
-        this.patients = data;
+    this.registerServiceObj.getAllPatients().subscribe({
+      next: (response) => {
+        this.patients = response['payload'];
       },
-      (error) => {
-        console.error('Error fetching patients:', error);
-      }
-    );
+      error: (err) => {
+        console.log('Error is:', err);
+      },
+    });
   }
 
   onClickDeleteDoctor(doctor) {
@@ -68,7 +70,7 @@ export class AdminDashboardComponent implements OnInit {
     this.appointmentServiceObj.deletePatient(patient);
 
     alert(
-        patient.patfirstname +
+      patient.patfirstname +
         ' ' +
         patient.patlastname +
         ' - ' +

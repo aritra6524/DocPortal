@@ -116,6 +116,21 @@ export class LoginComponent {
   }
 
   onAdminLogin(): void {
+    let doctorCredObj = this.loginAdminForm.value;
+    this.serviceObj.loginAdmin(doctorCredObj).subscribe({
+      next: (response) => {
+        if (response['message'] == 'Login success') {
+          this.errorMsg = '';
+          //navigate
+          this.router.navigate([
+            '/dashboard/patient-list',
+            adminCredObj.email,
+          ]);
+        } else {
+          this.errorMsg = response['message'];
+        }
+
+
     const adminCredObj = this.loginAdminForm.value;
     this.serviceObj.getuserCredAdmin(adminCredObj.username).subscribe({
       next: (response) => {
