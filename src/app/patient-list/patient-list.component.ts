@@ -107,12 +107,18 @@ export class PatientListComponent implements OnInit {
     });
   }
 
-  onClickCancelAppointment(result: any) {
-    this.appointmentServiceObj.cancelAppointment(result);
-    this.router
-      .navigateByUrl('/dashboard', { skipLocationChange: true })
-      .then(() => {
-        this.router.navigate([decodeURI(this.location.path())]);
-      });
+  onClickCancelAppointment(appointment) {
+    this.appointmentServiceObj.deleteAppointment(appointment).subscribe({
+      next: (response) => {
+        alert('Appointment Deleted!');
+      },
+      error: (err) => {
+        console.log('Error is :', err);
+      },
+    });
+    //Refresh the component
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate([decodeURI(this.location.path())]);
+    });
   }
 }

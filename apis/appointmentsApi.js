@@ -5,6 +5,7 @@ const verifyToken = require("./middlewares/verifyToken");
 const bcryptjs = require("bcryptjs");
 const expressAsyncHandler = require("express-async-handler");
 const jwt = require("jsonwebtoken");
+const { ObjectId } = require("mongodb");
 
 //body parser
 appointmentsApp.use(exp.json());
@@ -71,47 +72,65 @@ appointmentsApp.post(
 //   })
 // );
 
-//delete appointment by id
-appointmentsApp.delete(
-  "/appointments/:id",
-  expressAsyncHandler(async (req, res) => {
-    //get appointmentsCollection
-    const appointmentsCollection = req.app.get("appointmentsCollection");
-    //get email from url
-    let idOfUrl = req.params.id;
-    //update user status to false
-    // console.log("_id=" + _id);
-    // console.log("idOfUrl=" + idOfUrl);
-    const result = await appointmentsCollection.deleteOne({ _id: idOfUrl });
+// // soft delete appointment by id
+// appointmentsApp.delete(
+//   "/appointments/:id",
+//   expressAsyncHandler(async (req, res) => {
+//     //get appointmentsCollection
+//     const appointmentsCollection = req.app.get("appointmentsCollection");
+//     //get email from url
+//     let idOfUrl = req.params.id;
+//     //update user status to false
+//     // console.log("_id=" + _id);
+//     // console.log("idOfUrl=" + idOfUrl);
+//     const result = await appointmentsCollection.deleteOne({ _id: idOfUrl });
 
-    if (result.deletedCount === 1) {
-      res.send({ message: "Appointment deleted." });
-    } else {
-      res.status(404).json({ message: "Appointment not found." });
-    }
+//     if (result.deletedCount === 1) {
+//       res.send({ message: "Appointment deleted." });
+//     } else {
+//       res.status(404).json({ message: "Appointment not found." });
+//     }
 
-    //send res
-    // res.send({ message: "appointment deleted" });
-  })
-);
+//     //send res
+//     // res.send({ message: "appointment deleted" });
+//   })
+// );
 
-//restore appointment by email
-appointmentsApp.get(
-  "/appointment-restore/:docemail",
-  expressAsyncHandler(async (req, res) => {
-    //get appointmentsCollection
-    const appointmentsCollection = req.app.get("appointmentsCollection");
-    //get email from url
-    let emailOfUrl = req.params.email;
-    //update user status to false
-    await appointmentsCollection.updateOne(
-      { docemail: emailOfUrl },
-      { $set: { status: true } }
-    );
-    //send res
-    res.send({ message: "appointment restored" });
-  })
-);
+// //restore appointment by email
+// appointmentsApp.get(
+//   "/appointment-restore/:docemail",
+//   expressAsyncHandler(async (req, res) => {
+//     //get appointmentsCollection
+//     const appointmentsCollection = req.app.get("appointmentsCollection");
+//     //get email from url
+//     let emailOfUrl = req.params.email;
+//     //update user status to false
+//     await appointmentsCollection.updateOne(
+//       { docemail: emailOfUrl },
+//       { $set: { status: true } }
+//     );
+//     //send res
+//     res.send({ message: "appointment restored" });
+//   })
+// );
+
+//parmanently delete patient by _id
+appointmentsApp.delete("/appointments-delete/:_id", async (req, res) => {
+  //get appointmentsCollection
+  const appointmentsCollection = req.app.get("appointmentsCollection");
+  //get email from url
+  let idOfUrl = req.params._id;
+  var o_id = new ObjectId(idOfUrl);
+  let appointment = await appointmentsCollection.findOne({
+    _id: o_id,
+  });
+  if (appointment == null) {
+    res.send({ message: "Appointment does not exist in DB" });
+  } else {
+    await appointmentsCollection.deleteOne({ _id: o_id });
+    res.send({ message: "Appointment is deleted" });
+  }
+});
 
 //private route
 appointmentsApp.get("/test-private", verifyToken, (req, res) => {

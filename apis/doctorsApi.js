@@ -140,37 +140,68 @@ doctorsApp.put(
   })
 );
 
-//delete doctor by email
+// //soft delete doctor by email
+// doctorsApp.delete("/doctors-delete/:email", async (req, res) => {
+//   //get doctorsCollection
+//   const doctorsCollection = req.app.get("doctorsCollection");
+//   //get email from url
+//   let emailOfUrl = req.params.email;
+//   //update user status to false
+//   let doctor = await doctorsCollection.findOne({
+//     docemail: emailOfUrl,
+//     status: true,
+//   });
+//   if (doctor == null) {
+//     res.send({ message: "Doctor does not exist in DB" });
+//   } else {
+//     await doctorsCollection.updateOne(
+//       { docemail: emailOfUrl },
+//       { $set: { status: false } }
+//     );
+//     res.send({ message: "Doctor is deleted" });
+//   }
+// });
+
+//parmanently delete doctor by email
 doctorsApp.delete("/doctors-delete/:email", async (req, res) => {
   //get doctorsCollection
   const doctorsCollection = req.app.get("doctorsCollection");
   //get email from url
   let emailOfUrl = req.params.email;
   //update user status to false
-  let doctor = await doctorsCollection.findOne({ docemail: emailOfUrl, status: true  });
-  if(doctor==null){
-    res.send({message:"Doctor does not exist in DB"})
+  let doctor = await doctorsCollection.findOne({
+    docemail: emailOfUrl,
+    status: true,
+  });
+  if (doctor == null) {
+    res.send({ message: "Doctor does not exist in DB" });
   } else {
-    await doctorsCollection.updateOne({docemail:emailOfUrl}, {$set:{status:false}})
-    res.send({message:"Doctor is deleted"})
+    await doctorsCollection.deleteOne({ docemail: emailOfUrl });
+    res.send({ message: "Doctor is deleted" });
   }
 });
 
 //restore doctor by email
-doctorsApp.get("/doctors-restore/:docemail",async (req, res) => {
-    //get doctorsCollection
-    const doctorsCollection = req.app.get("doctorsCollection");
-    //get email from url
-    let emailOfUrl = req.params.email;
-    //update user status to true
-  let doctor = await doctorsCollection.findOne({ docemail: emailOfUrl, status: false  });
-  if(doctor==null){
-    res.send({message:"Deleted doctor does not exist in DB"})
-  } else {
-    await doctorsCollection.updateOne({docemail:emailOfUrl}, {$set:{status:true}})
-    res.send({message:"Doctor is restored."})
-  }
+doctorsApp.get("/doctors-restore/:docemail", async (req, res) => {
+  //get doctorsCollection
+  const doctorsCollection = req.app.get("doctorsCollection");
+  //get email from url
+  let emailOfUrl = req.params.email;
+  //update user status to true
+  let doctor = await doctorsCollection.findOne({
+    docemail: emailOfUrl,
+    status: false,
   });
+  if (doctor == null) {
+    res.send({ message: "Deleted doctor does not exist in DB" });
+  } else {
+    await doctorsCollection.updateOne(
+      { docemail: emailOfUrl },
+      { $set: { status: true } }
+    );
+    res.send({ message: "Doctor is restored." });
+  }
+});
 
 //private route
 doctorsApp.get("/test-private", verifyToken, (req, res) => {

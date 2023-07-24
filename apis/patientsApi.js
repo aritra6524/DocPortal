@@ -117,36 +117,54 @@ patientsApp.post("/patient-login", async (req, res) => {
 //   res.send({ message: "User modified" });
 // });
 
-//delete patient by email
-patientsApp.delete("/patients-deleted/:email", async (req, res) => {
-  //get doctorsCollection
+// //soft delete patient by email
+// patientsApp.delete("/patients-deleted/:email", async (req, res) => {
+//   //get doctorsCollection
+//   const patientsCollection = req.app.get("patientsCollection");
+//   //get email from url
+//   let emailOfUrl = req.params.email;
+//   //update user status to false
+//   let patient = await patientsCollection.findOne({ patemail: emailOfUrl, status: false  });
+//   if(patient==null){
+//     res.send({message:"Patient does not exist in DB"})
+//   } else {
+//     await patientsCollection.updateOne({patemail:emailOfUrl}, {$set:{status:false}})
+//     res.send({message:"Patient is deleted"})
+//   }
+// });
+
+//parmanently delete patient by email
+patientsApp.delete("/patients-delete/:email", async (req, res) => {
+  //get patientssCollection
   const patientsCollection = req.app.get("patientsCollection");
   //get email from url
   let emailOfUrl = req.params.email;
-  //update user status to false
-  let patient = await patientsCollection.findOne({ patemail: emailOfUrl, status: false  });
-  if(patient==null){
-    res.send({message:"Patient does not exist in DB"})
+  let patient = await patientsCollection.findOne({
+    patemail: emailOfUrl,
+    status: true,
+  });
+  if (patient == null) {
+    res.send({ message: "Patient does not exist in DB" });
   } else {
-    await patientsCollection.updateOne({patemail:emailOfUrl}, {$set:{status:false}})
-    res.send({message:"Patient is deleted"})
+    await patientsCollection.deleteOne({ patemail: emailOfUrl });
+    res.send({ message: "Patient is deleted" });
   }
 });
 
-//restore patient by email
-patientsApp.get("/patients-restore/:email", async (req, res) => {
-  //get patientsCollection
-  const patientsCollection = req.app.get("patientsCollection");
-  //get email from url
-  let emailOfUrl = req.params.email;
-  //update user status to false
-  await patientsCollection.updateOne(
-    { email: emailOfUrl },
-    { $set: { status: true } }
-  );
-  //send res
-  res.send({ message: "patient restored" });
-});
+// //restore patient by email
+// patientsApp.get("/patients-restore/:email", async (req, res) => {
+//   //get patientsCollection
+//   const patientsCollection = req.app.get("patientsCollection");
+//   //get email from url
+//   let emailOfUrl = req.params.email;
+//   //update user status to false
+//   await patientsCollection.updateOne(
+//     { email: emailOfUrl },
+//     { $set: { status: true } }
+//   );
+//   //send res
+//   res.send({ message: "patient restored" });
+// });
 
 // //private route
 // userApp.get("/test-private", verifyToken, (req, res) => {

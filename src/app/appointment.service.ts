@@ -36,38 +36,9 @@ export class AppointmentService {
     return this.hC.get('http://localhost:3000/appointments-api/appointments');
   }
 
-  cancelAppointment(appointment: any) {
-    this.hC
-      .delete(
-        `http://localhost:3000/appointments-api/appointments/${appointment._id}`
-      )
-      .subscribe(
-        (response) => {
-          console.log(response); // Document deleted successfully
-        },
-        (error) => {
-          console.error(error);
-        }
-      );
-
-    // return this.hC.delete(
-    //   `http://localhost:3000/appointments-api/appointments/${appointment._id}`
-    // );
-  }
-
-  deleteDoctor(doctor) {
-    //Delete Doctor
-    this.hC.delete(`http://localhost:3000/doctor/${doctor.id}`).subscribe(
-      (data) => {},
-      (error) => {}
-    );
-  }
-
-  deletePatient(patient) {
-    //Delete Patient
-    this.hC.delete(`http://localhost:3000/patient/${patient.id}`).subscribe(
-      (data) => {},
-      (error) => {}
+  deleteAppointment(appointment) {
+    return this.hC.delete(
+      `http://localhost:3000/appointments-api/appointments-delete/${appointment._id}`
     );
   }
 }
