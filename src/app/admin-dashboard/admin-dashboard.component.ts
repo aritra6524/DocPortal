@@ -30,7 +30,6 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   fetchDoctors() {
-
     //fetch all doctors
     this.registerServiceObj.getAllDoctors().subscribe({
       next: (response) => {
@@ -43,13 +42,13 @@ export class AdminDashboardComponent implements OnInit {
 
     //fetch deleted doctors
     this.registerServiceObj.getDeletedDoctors().subscribe({
-      next:(response) => {
+      next: (response) => {
         this.deletedDoctors = response['payload'];
       },
       error: (err) => {
-        console.log("Error is: ",err);
-      }
-    })
+        console.log('Error is: ', err);
+      },
+    });
   }
 
   fetchPatients() {
@@ -65,18 +64,18 @@ export class AdminDashboardComponent implements OnInit {
 
     //fetch deleted patients
     this.registerServiceObj.getDeletedPatients().subscribe({
-      next:(response) => {
+      next: (response) => {
         this.deletedPatients = response['payload'];
       },
       error: (err) => {
-        console.log("Error is: ",err);
-      }
-    })
+        console.log('Error is: ', err);
+      },
+    });
   }
 
   onClickDeleteDoctor(doctor) {
     this.registerServiceObj.deleteDoctor(doctor).subscribe({
-      next:(response) => {
+      next: (response) => {
         alert(
           'Dr. ' +
             doctor.docfirstname +
@@ -87,10 +86,10 @@ export class AdminDashboardComponent implements OnInit {
         );
         // this.ngOnInit();
       },
-      error:(err)=> {
-        console.log("Error is :",err);
-      }
-    })
+      error: (err) => {
+        console.log('Error is :', err);
+      },
+    });
 
     //Refresh the component
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
@@ -100,7 +99,7 @@ export class AdminDashboardComponent implements OnInit {
 
   onClickRestoreDoctor(doctor) {
     this.registerServiceObj.restoreDoctor(doctor).subscribe({
-      next:(response) => {
+      next: (response) => {
         alert(
           'Dr. ' +
             doctor.docfirstname +
@@ -110,10 +109,10 @@ export class AdminDashboardComponent implements OnInit {
             'Profile Restored'
         );
       },
-      error:(err)=> {
-        console.log("Error is :",err);
-      }
-    })
+      error: (err) => {
+        console.log('Error is :', err);
+      },
+    });
 
     //Refresh the component
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
@@ -123,20 +122,19 @@ export class AdminDashboardComponent implements OnInit {
 
   onClickDeletePatient(patient) {
     this.registerServiceObj.deletePatient(patient).subscribe({
-      next:(response) => {
+      next: (response) => {
         alert(
-            patient.patfirstname +
+          patient.patfirstname +
             ' ' +
             patient.patlastname +
             ' - ' +
             'Profile Deleted!'
         );
       },
-      error:(err)=> {
-        console.log("Error is :",err);
-      }
-    })
-
+      error: (err) => {
+        console.log('Error is :', err);
+      },
+    });
     //Refresh the component
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate([decodeURI(this.location.path())]);
@@ -145,19 +143,19 @@ export class AdminDashboardComponent implements OnInit {
 
   onClickRestorePatient(patient) {
     this.registerServiceObj.restorePatient(patient).subscribe({
-      next:(response) => {
+      next: (response) => {
         alert(
-            patient.patfirstname +
+          patient.patfirstname +
             ' ' +
             patient.patlastname +
             ' - ' +
             'Profile Restored'
         );
       },
-      error:(err)=> {
-        console.log("Error is :",err);
-      }
-    })
+      error: (err) => {
+        console.log('Error is :', err);
+      },
+    });
 
     //Refresh the component
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
