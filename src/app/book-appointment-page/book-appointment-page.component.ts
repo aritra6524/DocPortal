@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { AppointmentService } from '../appointment.service';
 import { RegisterService } from '../register.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 interface Doctor {
   docfirstname: string;
@@ -133,46 +134,56 @@ export class BookAppointmentPageComponent implements OnInit {
   // }
 
   bookAppointment() {
-    const appointmentFormObj = this.appointmentForm.value;
+    Swal.fire({
+      title: 'Are You Sure?',
+      text: 'Click Yes to confirm appointment. Otherwise click No.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, confirm',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // console.log('Clicked Yes');
 
-    this.appointment = Object.assign({
-      docfirstname: this.selectedDoctor.docfirstname,
-      doclastname: this.selectedDoctor.doclastname,
-      docregd: this.selectedDoctor.docregd,
-      docspecialization: this.selectedDoctor.docspecialization,
-      docqualification: this.selectedDoctor.docqualification,
-      docphone: this.selectedDoctor.docphone,
-      docemail: this.selectedDoctor.docemail,
-      clinicname: this.selectedDoctor.clinicname,
-      cliniccity: this.selectedDoctor.cliniccity,
-      clinicaddress: this.selectedDoctor.clinicaddress,
-      doctime: this.selectedDoctor.doctime,
-      patfirstname: this.selectedPatient.patfirstname,
-      patlastname: this.selectedPatient.patlastname,
-      patemail: this.selectedPatient.patemail,
-      patphone: this.selectedPatient.patphone,
-      appointmentDate: appointmentFormObj.appointmentDate,
+        const appointmentFormObj = this.appointmentForm.value;
+
+        this.appointment = Object.assign({
+          docfirstname: this.selectedDoctor.docfirstname,
+          doclastname: this.selectedDoctor.doclastname,
+          docregd: this.selectedDoctor.docregd,
+          docspecialization: this.selectedDoctor.docspecialization,
+          docqualification: this.selectedDoctor.docqualification,
+          docphone: this.selectedDoctor.docphone,
+          docemail: this.selectedDoctor.docemail,
+          clinicname: this.selectedDoctor.clinicname,
+          cliniccity: this.selectedDoctor.cliniccity,
+          clinicaddress: this.selectedDoctor.clinicaddress,
+          doctime: this.selectedDoctor.doctime,
+          patfirstname: this.selectedPatient.patfirstname,
+          patlastname: this.selectedPatient.patlastname,
+          patemail: this.selectedPatient.patemail,
+          patphone: this.selectedPatient.patphone,
+          appointmentDate: appointmentFormObj.appointmentDate,
+        });
+
+        this.serviceObj.setAppointment(this.appointment).subscribe({
+          next: (data) => {},
+          error: (error) => {
+            console.error('Error booking appointment :', error);
+          },
+        });
+
+        // console.log(appointmentFormObj.appointmentDate);
+        //this.checkInvalidDate(this.appointmentDate);
+
+        Swal.fire('Confirmed', 'Your appointment is confirmed!', 'success');
+
+        this.router.navigate([
+          `/dashboard/doctor-list/${this.appointment.patemail}`,
+        ]);
+      } else if (result.isDismissed) {
+        // console.log('Clicked No.');
+      }
     });
-
-    this.serviceObj.setAppointment(this.appointment).subscribe({
-      next: (data) => {},
-      error: (error) => {
-        console.error('Error booking appointment :', error);
-      },
-    });
-
-    console.log(appointmentFormObj.appointmentDate);
-    //this.checkInvalidDate(this.appointmentDate);
-
-    alert(
-      'Appointment with Dr. ' +
-        this.appointment.docfirstname +
-        ' ' +
-        this.appointment.doclastname +
-        ' Booked Successfully'
-    );
-    this.router.navigate([
-      `/dashboard/doctor-list/${this.appointment.patemail}`,
-    ]);
   }
 }

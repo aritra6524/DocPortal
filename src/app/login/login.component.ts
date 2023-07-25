@@ -34,7 +34,7 @@ export class LoginComponent {
   }
 
   setProfile(profile: string): void {
-    this.errorMsg='';
+    this.errorMsg = '';
     this.profileType = profile;
   }
 
@@ -70,6 +70,7 @@ export class LoginComponent {
           this.serviceObj.setLoginStatus(true);
           this.serviceObj.setCurrentDoctor(response['currentDoctor']);
           this.errorMsg = '';
+
           //navigate
           this.router.navigate([
             '/dashboard/patient-list',
@@ -105,13 +106,12 @@ export class LoginComponent {
   onAdminLogin(): void {
     let adminCredObj = this.loginAdminForm.value;
 
-    if(adminCredObj.username == "admin"){
-      if(adminCredObj.password == "admin"){
+    if (adminCredObj.username == 'admin') {
+      if (adminCredObj.password == 'admin') {
         this.serviceObj.setLoginStatus(true);
+
         //navigate
-          this.router.navigate([
-            '/admin-dashboard'
-          ]);
+        this.router.navigate(['/admin-dashboard']);
       }
     }
     // this.serviceObj.loginAdmin(doctorCredObj).subscribe({
@@ -126,7 +126,6 @@ export class LoginComponent {
     //     } else {
     //       this.errorMsg = response['message'];
     //     }
-
 
     // const adminCredObj = this.loginAdminForm.value;
     // this.serviceObj.getuserCredAdmin(adminCredObj.username).subscribe({

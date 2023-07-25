@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { AppointmentService } from '../appointment.service';
 import { Location } from '@angular/common';
 import { RegisterService } from '../register.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -76,15 +77,19 @@ export class AdminDashboardComponent implements OnInit {
   onClickDeleteDoctor(doctor) {
     this.registerServiceObj.deleteDoctor(doctor).subscribe({
       next: (response) => {
-        alert(
-          'Dr. ' +
-            doctor.docfirstname +
-            ' ' +
-            doctor.doclastname +
-            ' - ' +
-            'Profile Deleted!'
+        // alert(
+        //   'Dr. ' +
+        //     doctor.docfirstname +
+        //     ' ' +
+        //     doctor.doclastname +
+        //     ' - ' +
+        //     'Profile Deleted!'
+        // );
+        Swal.fire(
+          'Doctor Deleted',
+          'Doctor is deleted successfully!',
+          'warning'
         );
-        // this.ngOnInit();
       },
       error: (err) => {
         console.log('Error is :', err);
@@ -97,37 +102,42 @@ export class AdminDashboardComponent implements OnInit {
     });
   }
 
-  onClickRestoreDoctor(doctor) {
-    this.registerServiceObj.restoreDoctor(doctor).subscribe({
-      next: (response) => {
-        alert(
-          'Dr. ' +
-            doctor.docfirstname +
-            ' ' +
-            doctor.doclastname +
-            ' - ' +
-            'Profile Restored'
-        );
-      },
-      error: (err) => {
-        console.log('Error is :', err);
-      },
-    });
-    //Refresh the component
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([decodeURI(this.location.path())]);
-    });
-  }
+  // onClickRestoreDoctor(doctor) {
+  //   this.registerServiceObj.restoreDoctor(doctor).subscribe({
+  //     next: (response) => {
+  //       alert(
+  //         'Dr. ' +
+  //           doctor.docfirstname +
+  //           ' ' +
+  //           doctor.doclastname +
+  //           ' - ' +
+  //           'Profile Restored'
+  //       );
+  //     },
+  //     error: (err) => {
+  //       console.log('Error is :', err);
+  //     },
+  //   });
+  //   //Refresh the component
+  //   this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+  //     this.router.navigate([decodeURI(this.location.path())]);
+  //   });
+  // }
 
   onClickDeletePatient(patient) {
     this.registerServiceObj.deletePatient(patient).subscribe({
       next: (response) => {
-        alert(
-          patient.patfirstname +
-            ' ' +
-            patient.patlastname +
-            ' - ' +
-            'Profile Deleted!'
+        // alert(
+        //   patient.patfirstname +
+        //     ' ' +
+        //     patient.patlastname +
+        //     ' - ' +
+        //     'Profile Deleted!'
+        // );
+        Swal.fire(
+          'Patient Deleted',
+          'Patient is deleted successfully!',
+          'warning'
         );
       },
       error: (err) => {

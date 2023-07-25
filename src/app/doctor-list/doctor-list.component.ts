@@ -5,6 +5,7 @@ import { AppointmentService } from '../appointment.service';
 import { RegisterService } from '../register.service';
 import { FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
 
 interface Doctor {
   docfirstname: string;
@@ -165,17 +166,47 @@ export class DoctorListComponent implements OnInit {
   }
 
   onClickCancelAppointment(appointment: any) {
-    this.appointmentServiceObj.deleteAppointment(appointment).subscribe({
-      next: (response) => {
-        alert('Appointment Deleted!');
-      },
-      error: (err) => {
-        console.log('Error is :', err);
-      },
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Your appointment will be parmanently deleted!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, cancel',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.appointmentServiceObj.deleteAppointment(appointment).subscribe({
+          next: (response) => {
+            // alert('Appointment Deleted!');
+            Swal.fire('Deleted', 'Your appointment is deleted!', 'error');
+          },
+          error: (err) => {
+            console.log('Error is :', err);
+          },
+        });
+        //Refresh the component
+        this.router
+          .navigateByUrl('/', { skipLocationChange: true })
+          .then(() => {
+            this.router.navigate([decodeURI(this.location.path())]);
+          });
+      } else if (result.isDismissed) {
+        // console.log('Clicked No, File is safe!');
+      }
     });
-    //Refresh the component
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([decodeURI(this.location.path())]);
-    });
+
+    // this.appointmentServiceObj.deleteAppointment(appointment).subscribe({
+    //   next: (response) => {
+    //     // alert('Appointment Deleted!');
+    //     Swal.fire('Deleted', 'Your appointment is deleted!', 'warning');
+    //   },
+    //   error: (err) => {
+    //     console.log('Error is :', err);
+    //   },
+    // });
+    // //Refresh the component
+    // this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    //   this.router.navigate([decodeURI(this.location.path())]);
+    // });
   }
 }

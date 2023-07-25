@@ -34,7 +34,7 @@ app.use("/doctors-api", doctorsApp);
 app.use("/patients-api", patientsApp);
 app.use("/appointments-api", appointmentsApp);
 
-app.use((req, res, next) => {
+app.use("*", (req, res, next) => {
   res.sendFile(path.join(__dirname, "./dist/docportal/index.html"));
 });
 

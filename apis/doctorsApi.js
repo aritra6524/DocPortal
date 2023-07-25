@@ -66,7 +66,7 @@ doctorsApp.post(
     });
     //if doctor existed with that username
     if (doctor != null) {
-      res.send({ message: "Username has already taken. Choose another one" });
+      res.send({ message: "Doctor already exists." });
     } else {
       //add status
       newDoctor.status = true;

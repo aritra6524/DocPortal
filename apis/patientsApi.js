@@ -47,7 +47,7 @@ patientsApp.post("/patients", async (req, res) => {
   });
   //if patient existed with that email
   if (patient != null) {
-    res.send({ message: "Patient already exists. Log in." });
+    res.send({ message: "Patient already exists." });
   } else {
     //add status
     newpatient.status = true;
@@ -90,7 +90,7 @@ patientsApp.post("/patient-login", async (req, res) => {
     else {
       //create token
       let signedToken = jwt.sign({ patemail: patient.patemail }, "abcdef", {
-        expiresIn: 100,
+        expiresIn: 1,
       });
       //send token in res
       res.send({

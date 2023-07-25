@@ -27,15 +27,15 @@ import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.compo
     DoctorListComponent,
     BookAppointmentPageComponent,
     PatientListComponent,
-    AdminDashboardComponent
+    AdminDashboardComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
