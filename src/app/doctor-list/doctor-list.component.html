@@ -2,10 +2,14 @@
   <!-- <h5>
     Hi, {{ selectedPatient.patfirstname }} {{ selectedPatient.patlastname }}
   </h5> -->
+  <i
+    ><h1 style="color: rgba(1, 133, 1, 0.705); font-weight: strong">
+      Hi, {{ selectedPatient.patfirstname }}
+    </h1></i
+  >
   <div class="appointment-list" *ngIf="apptfilters.length != 0">
     <i
       ><h4 style="color: rgba(1, 133, 1, 0.705); font-weight: strong">
-        <h1>Hi, {{ selectedPatient.patfirstname }}</h1>
         Your Appointments
       </h4></i
     >

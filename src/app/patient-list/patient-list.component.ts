@@ -4,6 +4,7 @@ import { AppointmentService } from '../appointment.service';
 import { RegisterService } from '../register.service';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
+import Swal from 'sweetalert2';
 
 interface Appointment {
   patfirstname: string;
@@ -108,17 +109,31 @@ export class PatientListComponent implements OnInit {
   }
 
   onClickCancelAppointment(appointment) {
-    this.appointmentServiceObj.deleteAppointment(appointment).subscribe({
-      next: (response) => {
-        alert('Appointment Deleted!');
-      },
-      error: (err) => {
-        console.log('Error is :', err);
-      },
-    });
-    //Refresh the component
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate([decodeURI(this.location.path())]);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Appointment will be parmanently deleted!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, cancel',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.appointmentServiceObj.deleteAppointment(appointment).subscribe({
+          next: (response) => {
+            // alert('Appointment Deleted!');
+            Swal.fire('Deleted', 'Appointment is deleted!', 'error');
+          },
+          error: (err) => {
+            console.log('Error is :', err);
+          },
+        });
+        //Refresh the component
+        this.router
+          .navigateByUrl('/', { skipLocationChange: true })
+          .then(() => {
+            this.router.navigate([decodeURI(this.location.path())]);
+          });
+      }
     });
   }
 }

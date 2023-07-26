@@ -17,22 +17,22 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerPatForm = new FormGroup({
-      patfirstname: new FormControl(null),
-      patlastname: new FormControl(null),
-      patphone: new FormControl(null),
-      patemail: new FormControl(null),
-      patpassword: new FormControl(null),
+      patfirstname: new FormControl(null, [Validators.required]),
+      patlastname: new FormControl(null, [Validators.required]),
+      patphone: new FormControl(null, [Validators.required]),
+      patemail: new FormControl(null, [Validators.required, Validators.email]),
+      patpassword: new FormControl(null, [Validators.required]),
       patcity: new FormControl(null),
     });
     this.registerDocForm = new FormGroup({
-      docfirstname: new FormControl(null),
-      doclastname: new FormControl(null),
-      docregd: new FormControl(null),
-      docspecialization: new FormControl(null),
-      docqualification: new FormControl(null),
-      docphone: new FormControl(null),
-      docemail: new FormControl(null),
-      docpassword: new FormControl(null),
+      docfirstname: new FormControl(null, [Validators.required]),
+      doclastname: new FormControl(null, [Validators.required]),
+      docregd: new FormControl(null, [Validators.required]),
+      docspecialization: new FormControl(null, [Validators.required]),
+      docqualification: new FormControl(null, [Validators.required]),
+      docphone: new FormControl(null, [Validators.required]),
+      docemail: new FormControl(null, [Validators.required, Validators.email]),
+      docpassword: new FormControl(null, [Validators.required]),
       clinicname: new FormControl(null),
       cliniccity: new FormControl(null),
       clinicaddress: new FormControl(null),
@@ -45,6 +45,46 @@ export class RegisterComponent implements OnInit {
       sat: new FormControl(false),
       sun: new FormControl(false),
     });
+  }
+
+  get patfirstname() {
+    return this.registerPatForm.get('patfirstname');
+  }
+  get patlastname() {
+    return this.registerPatForm.get('patlastname');
+  }
+  get patphone() {
+    return this.registerPatForm.get('patphone');
+  }
+  get patemail() {
+    return this.registerPatForm.get('patemail');
+  }
+  get patpassword() {
+    return this.registerPatForm.get('patpassword');
+  }
+  get docfirstname() {
+    return this.registerDocForm.get('docfirstname');
+  }
+  get doclastname() {
+    return this.registerDocForm.get('doclastname');
+  }
+  get docregd() {
+    return this.registerDocForm.get('docregd');
+  }
+  get docspecialization() {
+    return this.registerDocForm.get('docspecialization');
+  }
+  get docqualification() {
+    return this.registerDocForm.get('docqualification');
+  }
+  get docphone() {
+    return this.registerDocForm.get('docphone');
+  }
+  get docemail() {
+    return this.registerDocForm.get('docemail');
+  }
+  get docpassword() {
+    return this.registerDocForm.get('docpassword');
   }
 
   setProfile(profile: string): void {

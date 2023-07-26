@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RegisterService } from '../register.service';
 
@@ -20,17 +20,36 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.loginPatForm = new FormGroup({
-      patemail: new FormControl(null),
-      patpassword: new FormControl(null),
+      patemail: new FormControl(null, [Validators.required, Validators.email]),
+      patpassword: new FormControl(null, [Validators.required]),
     });
     this.loginDocForm = new FormGroup({
-      docemail: new FormControl(null),
-      docpassword: new FormControl(null),
+      docemail: new FormControl(null, [Validators.required, Validators.email]),
+      docpassword: new FormControl(null, [Validators.required]),
     });
     this.loginAdminForm = new FormGroup({
-      username: new FormControl(null),
-      password: new FormControl(null),
+      username: new FormControl(null, [Validators.required]),
+      password: new FormControl(null, [Validators.required]),
     });
+  }
+
+  get patemail() {
+    return this.loginPatForm.get('patemail');
+  }
+  get patpassword() {
+    return this.loginPatForm.get('patpassword');
+  }
+  get docemail() {
+    return this.loginDocForm.get('docemail');
+  }
+  get docpassword() {
+    return this.loginDocForm.get('docpassword');
+  }
+  get username() {
+    return this.loginAdminForm.get('username');
+  }
+  get password() {
+    return this.loginAdminForm.get('password');
   }
 
   setProfile(profile: string): void {
@@ -112,7 +131,11 @@ export class LoginComponent {
 
         //navigate
         this.router.navigate(['/admin-dashboard']);
+      } else {
+        this.errorMsg = 'Invalid password';
       }
+    } else {
+      this.errorMsg = 'Invalid username';
     }
     // this.serviceObj.loginAdmin(doctorCredObj).subscribe({
     //   next: (response) => {

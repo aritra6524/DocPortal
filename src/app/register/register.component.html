@@ -54,6 +54,12 @@
         <div class="mb-4 d-flex">
           <div class="form-outline w-50 me-3">
             <input
+              [ngStyle]="{
+                'border-color':
+                  patfirstname && patfirstname.invalid && patfirstname.touched
+                    ? 'red'
+                    : ''
+              }"
               type="text"
               id="first-name"
               class="form-control"
@@ -63,6 +69,12 @@
           </div>
           <div class="form-outline w-50">
             <input
+              [ngStyle]="{
+                'border-color':
+                  patlastname && patlastname.invalid && patlastname.touched
+                    ? 'red'
+                    : ''
+              }"
               type="text"
               id="last-name"
               class="form-control"
@@ -75,6 +87,10 @@
         <!-- Phone Number input -->
         <div class="form-outline mb-4">
           <input
+            [ngStyle]="{
+              'border-color':
+                patphone && patphone.invalid && patphone.touched ? 'red' : ''
+            }"
             type="number"
             id="phone-number"
             class="form-control"
@@ -86,6 +102,10 @@
         <!-- Email input -->
         <div class="form-outline mb-4">
           <input
+            [ngStyle]="{
+              'border-color':
+                patemail && patemail.invalid && patemail.touched ? 'red' : ''
+            }"
             type="email"
             id="email"
             class="form-control"
@@ -97,6 +117,12 @@
         <!-- Password input -->
         <div class="form-outline mb-4">
           <input
+            [ngStyle]="{
+              'border-color':
+                patpassword && patpassword.invalid && patpassword.touched
+                  ? 'red'
+                  : ''
+            }"
             type="password"
             id="pass"
             class="form-control"
@@ -110,7 +136,11 @@
         </div> -->
 
         <!-- Submit button -->
-        <button type="submit" class="btn btn-primary btn-block mb-4">
+        <button
+          type="submit"
+          class="btn btn-primary btn-block mb-4"
+          [disabled]="registerPatForm.invalid"
+        >
           Sign in
         </button>
       </div>
@@ -129,6 +159,12 @@
           <div class="mb-3 d-flex">
             <div class="form-outline w-50 me-3">
               <input
+                [ngStyle]="{
+                  'border-color':
+                    docfirstname && docfirstname.invalid && docfirstname.touched
+                      ? 'red'
+                      : ''
+                }"
                 type="text"
                 id="first-name"
                 class="form-control"
@@ -138,6 +174,12 @@
             </div>
             <div class="form-outline w-50">
               <input
+                [ngStyle]="{
+                  'border-color':
+                    doclastname && doclastname.invalid && doclastname.touched
+                      ? 'red'
+                      : ''
+                }"
                 type="text"
                 id="last-name"
                 class="form-control"
@@ -150,6 +192,10 @@
           <!--Registration Number input-->
           <div class="form-outline mb-3">
             <input
+              [ngStyle]="{
+                'border-color':
+                  docregd && docregd.invalid && docregd.touched ? 'red' : ''
+              }"
               type="number"
               id="regd-number"
               class="form-control"
@@ -163,6 +209,14 @@
           <!--Specialization input-->
           <div class="form-outline mb-3">
             <select
+              [ngStyle]="{
+                'border-color':
+                  docspecialization &&
+                  docspecialization.invalid &&
+                  docspecialization.touched
+                    ? 'red'
+                    : ''
+              }"
               name="specialization"
               id="specialization"
               class="form-control"
@@ -184,6 +238,14 @@
           <!--Doctor Qualification input-->
           <div class="form-outline mb-3">
             <input
+              [ngStyle]="{
+                'border-color':
+                  docqualification &&
+                  docqualification.invalid &&
+                  docqualification.touched
+                    ? 'red'
+                    : ''
+              }"
               type="text"
               id="qualification"
               class="form-control"
@@ -195,6 +257,10 @@
           <!-- Doctor's Phone Number input -->
           <div class="form-outline mb-3">
             <input
+              [ngStyle]="{
+                'border-color':
+                  docphone && docphone.invalid && docphone.touched ? 'red' : ''
+              }"
               type="number"
               id="phone-number"
               class="form-control"
@@ -206,6 +272,10 @@
           <!-- Email input -->
           <div class="form-outline mb-3">
             <input
+              [ngStyle]="{
+                'border-color':
+                  docemail && docemail.invalid && docemail.touched ? 'red' : ''
+              }"
               type="email"
               id="email"
               class="form-control"
@@ -217,6 +287,12 @@
           <!-- Password input -->
           <div class="form-outline mb-3">
             <input
+              [ngStyle]="{
+                'border-color':
+                  docpassword && docpassword.invalid && docpassword.touched
+                    ? 'red'
+                    : ''
+              }"
               type="password"
               id="password"
               class="form-control"
@@ -352,7 +428,11 @@
           </div>
 
           <!-- Submit button -->
-          <button type="submit" class="btn btn-primary btn-block mb-4">
+          <button
+            type="submit"
+            class="btn btn-primary btn-block mb-4"
+            [disabled]="registerDocForm.invalid"
+          >
             Sign-in
           </button>
         </div>
