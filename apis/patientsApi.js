@@ -1,7 +1,7 @@
 //create mini-express app(Separate route)
 const exp = require("express");
 const patientsApp = exp.Router();
-const verifyToken = require("./middlewares/verifyToken");
+// const verifyToken = require("./middlewares/verifyToken");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
@@ -90,7 +90,7 @@ patientsApp.post("/patient-login", async (req, res) => {
     else {
       //create token
       let signedToken = jwt.sign({ patemail: patient.patemail }, "abcdef", {
-        expiresIn: 1,
+        expiresIn: 5,
       });
       //send token in res
       res.send({

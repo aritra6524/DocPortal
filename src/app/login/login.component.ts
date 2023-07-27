@@ -65,7 +65,8 @@ export class LoginComponent {
           this.serviceObj.setLoginStatus(true);
           this.serviceObj.setCurrentPatient(response['currentPatient']);
           this.errorMsg = '';
-
+          //save token in browser memory (Local Storage)
+          localStorage.setItem('token', response['token']);
           //navigate
           this.router.navigate([
             '/dashboard/doctor-list',
