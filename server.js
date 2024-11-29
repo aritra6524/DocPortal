@@ -3,7 +3,7 @@ const app = exp();
 const path = require("path");
 
 //connect angular build with nodejs server
-app.use(exp.static(path.join(__dirname, "./dist/docportal")));
+app.use(exp.static(path.join(__dirname, "./dist")));
 
 //get MongoClient
 const mClient = require("mongodb").MongoClient;
